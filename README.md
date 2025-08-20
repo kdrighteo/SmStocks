@@ -1,36 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Furniture Showroom Management System
+
+A comprehensive inventory and point-of-sale (POS) system for furniture and bedding showrooms, built with Next.js, React, and TypeScript.
+
+## Features
+
+- **Role-based access control** (Admin and Cashier roles)
+- **Inventory Management** - Track products, stock levels, and categories
+- **Point of Sale** - Process sales with multiple payment methods
+- **Sales Reporting** - View sales analytics and transaction history
+- **Responsive Design** - Works on desktop and tablet devices
+
+## Tech Stack
+
+- **Frontend**: Next.js 14, React 18, TypeScript, Tailwind CSS
+- **State Management**: React Context API
+- **UI Components**: Headless UI, Hero Icons
+- **Form Handling**: React Hook Form
+- **Data Visualization**: Recharts
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js 18+ and npm/yarn/pnpm
+- PostgreSQL (for future backend integration)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/furniture-inventory.git
+   cd furniture-inventory
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   pnpm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   # or
+   pnpm dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Available Scripts
+
+- `npm run dev` - Start the development server
+- `npm run build` - Build the application for production
+- `npm start` - Start the production server
+- `npm run lint` - Run ESLint
+- `npm run format` - Format code with Prettier
+
+## Project Structure
+
+```
+src/
+├── app/                    # App router pages
+│   ├── auth/               # Authentication pages
+│   ├── dashboard/          # Protected routes
+│   │   ├── admin/          # Admin dashboard and features
+│   │   └── cashier/        # Cashier interface
+│   └── ...
+├── components/             # Reusable components
+│   ├── dashboard/          # Dashboard-specific components
+│   ├── forms/              # Form components
+│   ├── layout/             # Layout components
+│   └── ui/                 # UI components
+├── constants/              # App constants
+├── context/                # React context providers
+├── hooks/                  # Custom React hooks
+├── lib/                    # Utility functions
+├── styles/                 # Global styles
+└── types/                  # TypeScript type definitions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Authentication
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The application comes with two default user accounts for testing:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Admin Account
+- **Email**: admin@example.com
+- **Password**: admin123
+- **Access**: Full access to all features including inventory management and sales reports
 
-## Learn More
+### Cashier Account
+- **Email**: cashier@example.com
+- **Password**: cashier123
+- **Access**: Limited to POS and transaction history
 
-To learn more about Next.js, take a look at the following resources:
+## Environment Variables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Create a `.env.local` file in the root directory and add the following variables:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```env
+# Next.js
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 
-## Deploy on Vercel
+# Database (for future use)
+DATABASE_URL=postgresql://user:password@localhost:5432/furniture_showroom
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Vercel
+
+The easiest way to deploy this application is using [Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme), the platform from the creators of Next.js.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
+
+### Self-Hosting
+
+1. Build the application:
+   ```bash
+   npm run build
+   ```
+
+2. Start the production server:
+   ```bash
+   npm start
+   ```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
