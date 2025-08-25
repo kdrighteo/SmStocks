@@ -1,4 +1,4 @@
-# Furniture Showroom Management System
+# Smart Stock Manager
 
 A comprehensive inventory and point-of-sale (POS) system for furniture and bedding showrooms, built with Next.js, React, and TypeScript.
 
@@ -28,12 +28,14 @@ A comprehensive inventory and point-of-sale (POS) system for furniture and beddi
 ### Installation
 
 1. Clone the repository:
+
    ```bash
-   git clone https://github.com/yourusername/furniture-inventory.git
-   cd furniture-inventory
+   git clone https://github.com/kdrighteo/SmStocks.git
+   cd SmStocks
    ```
 
 2. Install dependencies:
+
    ```bash
    npm install
    # or
@@ -43,6 +45,7 @@ A comprehensive inventory and point-of-sale (POS) system for furniture and beddi
    ```
 
 3. Start the development server:
+
    ```bash
    npm run dev
    # or
@@ -89,11 +92,13 @@ src/
 The application comes with two default user accounts for testing:
 
 ### Admin Account
+
 - **Email**: admin@example.com
 - **Password**: admin123
 - **Access**: Full access to all features including inventory management and sales reports
 
 ### Cashier Account
+
 - **Email**: cashier@example.com
 - **Password**: cashier123
 - **Access**: Limited to POS and transaction history
@@ -121,6 +126,7 @@ The easiest way to deploy this application is using [Vercel](https://vercel.com/
 ### Self-Hosting
 
 1. Build the application:
+
    ```bash
    npm run build
    ```
