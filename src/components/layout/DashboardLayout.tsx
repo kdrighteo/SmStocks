@@ -385,7 +385,7 @@ function DashboardLayout({
               </div>
               <div className="h-0 flex-1 overflow-y-auto pt-5 pb-4">
                 <div className="flex flex-shrink-0 items-center px-4">
-                  <h1 className="text-xl font-bold text-indigo-600">FurniTrack Pro</h1>
+                  <h1 className="text-xl font-bold text-indigo-600">{user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : ''}</h1>
                 </div>
                 <nav className="mt-5 space-y-1 px-2">
                   {filteredNavigation.map((item) => (
@@ -414,7 +414,7 @@ function DashboardLayout({
             <div className="flex items-center justify-between px-4">
               {sidebarOpen && (
                 <h1 className="text-xl font-bold text-indigo-600 whitespace-nowrap">
-                  FurniTrack Pro
+                  {user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : ''}
                 </h1>
               )}
               <button

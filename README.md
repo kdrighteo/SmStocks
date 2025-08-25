@@ -1,22 +1,55 @@
-# Smart Stock Manager
+# Smart Stock Manager (SmStocks)
 
-A comprehensive inventory and point-of-sale (POS) system for furniture and bedding showrooms, built with Next.js, React, and TypeScript.
+A modern stock management and point-of-sale system built with Next.js, React, and TypeScript. Streamline inventory, sales, and reporting in one platform.
 
 ## Features
 
-- **Role-based access control** (Admin and Cashier roles)
-- **Inventory Management** - Track products, stock levels, and categories
-- **Point of Sale** - Process sales with multiple payment methods
-- **Sales Reporting** - View sales analytics and transaction history
-- **Responsive Design** - Works on desktop and tablet devices
+- **Role-based Access**
+  - Admin: Full system access
+  - Cashier: POS and basic inventory
+
+- **Inventory Management**
+  - Product tracking
+  - Stock level monitoring
+  - Category management
+
+- **Point of Sale**
+  - Quick checkout
+  - Multiple payment methods
+  - Receipt generation
+
+- **Customer Management**
+  - Customer profiles
+  - Purchase history
+  - Returns processing
+
+- **Reporting**
+  - Sales analytics
+  - Inventory reports
+  - Transaction history
 
 ## Tech Stack
 
-- **Frontend**: Next.js 14, React 18, TypeScript, Tailwind CSS
-- **State Management**: React Context API
-- **UI Components**: Headless UI, Hero Icons
-- **Form Handling**: React Hook Form
-- **Data Visualization**: Recharts
+- **Core**
+  - Next.js 14 with App Router
+  - React 18 with Hooks
+  - TypeScript for type safety
+  - Tailwind CSS for styling
+
+- **State & Data**
+  - React Context API for global state
+  - React Query for server state
+  - Zod for schema validation
+
+- **UI Components**
+  - Headless UI for accessible components
+  - Lucide Icons for consistent iconography
+  - Tremor for data visualization
+
+- **Development**
+  - ESLint and Prettier for code quality
+  - TypeScript for type checking
+  - Husky for Git hooks
 
 ## Getting Started
 
@@ -72,7 +105,14 @@ src/
 │   ├── auth/               # Authentication pages
 │   ├── dashboard/          # Protected routes
 │   │   ├── admin/          # Admin dashboard and features
+│   │   │   ├── inventory/  # Inventory management
+│   │   │   ├── users/      # User management
+│   │   │   ├── reports/    # Reporting
+│   │   │   └── settings/   # System settings
 │   │   └── cashier/        # Cashier interface
+│   │       ├── pos/        # Point of Sale
+│   │       ├── returns/    # Returns processing
+│   │       └── customers/  # Customer management
 │   └── ...
 ├── components/             # Reusable components
 │   ├── dashboard/          # Dashboard-specific components
@@ -80,11 +120,12 @@ src/
 │   ├── layout/             # Layout components
 │   └── ui/                 # UI components
 ├── constants/              # App constants
-├── context/                # React context providers
-├── hooks/                  # Custom React hooks
-├── lib/                    # Utility functions
-├── styles/                 # Global styles
-└── types/                  # TypeScript type definitions
+├── context/               # React context providers
+├── hooks/                 # Custom React hooks
+├── lib/                   # Utility functions
+├── prisma/                # Database schema and migrations
+├── public/                # Static assets
+└── types/                 # TypeScript type definitions
 ```
 
 ## Authentication

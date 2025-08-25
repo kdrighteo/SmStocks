@@ -2,6 +2,7 @@
 
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Card, LineChart, Title, Text, Metric, ProgressBar, Tab, TabGroup, TabList, TabPanel, TabPanels } from '@tremor/react';
 import { ShoppingCart, Users, Package, DollarSign, Box, CreditCard, RefreshCw, Tag, BarChart, Settings, FileText, Truck, AlertCircle, UserCheck } from 'lucide-react';
@@ -174,34 +175,34 @@ export default function AdminDashboard() {
           <Card>
             <Title>Quick Actions</Title>
             <div className="mt-4 space-y-3">
-              <a
-                href="/dashboard/admin/orders/new"
+              <Link
+                href="/dashboard/admin/orders"
                 className="flex items-center p-3 rounded-lg bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition-colors"
               >
                 <ShoppingCart className="h-5 w-5 mr-3" />
-                <span>Create New Order</span>
-              </a>
-              <a
-                href="/dashboard/admin/inventory/add"
+                <span>View Orders</span>
+              </Link>
+              <Link
+                href="/dashboard/admin/products?action=add"
                 className="flex items-center p-3 rounded-lg bg-green-50 text-green-700 hover:bg-green-100 transition-colors"
               >
                 <Package className="h-5 w-5 mr-3" />
-                <span>Add New Product</span>
-              </a>
-              <a
-                href="/dashboard/admin/customers/new"
+                <span>Manage Products</span>
+              </Link>
+              <Link
+                href="/dashboard/admin/customers?action=add"
                 className="flex items-center p-3 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors"
               >
                 <UserCheck className="h-5 w-5 mr-3" />
-                <span>Add New Customer</span>
-              </a>
-              <a
+                <span>Manage Customers</span>
+              </Link>
+              <Link
                 href="/dashboard/admin/reports"
                 className="flex items-center p-3 rounded-lg bg-purple-50 text-purple-700 hover:bg-purple-100 transition-colors"
               >
                 <BarChart className="h-5 w-5 mr-3" />
                 <span>Generate Report</span>
-              </a>
+              </Link>
             </div>
           </Card>
 
@@ -234,10 +235,10 @@ export default function AdminDashboard() {
             <Title>Top Selling Products</Title>
             <div className="mt-4 space-y-4">
               {topProducts.map((product, index) => (
-                <div 
+                <Link 
                   key={product.name} 
-                  className="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-colors cursor-pointer"
-                  onClick={() => router.push(`/dashboard/admin/products/${product.name.toLowerCase().replace(/\s+/g, '-')}`)}
+                  href="/dashboard/admin/products"
+                  className="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-colors"
                 >
                   <div className="flex-shrink-0 h-10 w-10 rounded-md bg-indigo-100 flex items-center justify-center text-indigo-600 font-medium">
                     {index + 1}
@@ -255,16 +256,16 @@ export default function AdminDashboard() {
                       Top Seller
                     </span>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
             <div className="mt-4 text-right">
-              <a 
+              <Link 
                 href="/dashboard/admin/products" 
                 className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
               >
                 View all products →
-              </a>
+              </Link>
             </div>
           </Card>
         </div>
@@ -273,9 +274,12 @@ export default function AdminDashboard() {
         <Card>
           <div className="flex items-center justify-between">
             <Title>Recent Activity</Title>
-            <button className="text-sm text-indigo-600 hover:text-indigo-500">
+            <Link 
+              href="/dashboard/admin/orders" 
+              className="text-sm text-indigo-600 hover:text-indigo-500"
+            >
               View All
-            </button>
+            </Link>
           </div>
           <div className="mt-4 space-y-4">
             {[
@@ -320,10 +324,10 @@ export default function AdminDashboard() {
                 color: 'indigo'
               },
             ].map((activity) => (
-              <div 
-                key={activity.id} 
-                className="flex items-start p-3 hover:bg-gray-50 rounded-lg transition-colors cursor-pointer"
-                onClick={() => router.push('/dashboard/admin/activity')}
+              <Link 
+                key={activity.id}
+                href="/dashboard/admin/orders"
+                className="flex items-start p-3 hover:bg-gray-50 rounded-lg transition-colors"
               >
                 <div className={`p-1.5 rounded-lg bg-${activity.color}-50 text-${activity.color}-500`}>
                   {activity.icon}
@@ -335,7 +339,7 @@ export default function AdminDashboard() {
                   </p>
                   <p className="text-xs text-gray-500">{activity.time}</p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </Card>
