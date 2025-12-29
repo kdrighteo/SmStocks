@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { 
   Card, Title, Text, Button, Tab, TabGroup, TabList, TabPanel, TabPanels, 
   Metric, BarChart, LineChart, AreaChart, DonutChart, Select, SelectItem
-} from '@tremor/react';
+} from '@/components/ui/tremor-replacements';
 import { Download, BarChart2, LineChart as LineChartIcon, PieChart, Filter } from 'lucide-react';
 
 // Mock data

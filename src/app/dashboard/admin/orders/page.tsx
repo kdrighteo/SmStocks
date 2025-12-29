@@ -7,7 +7,7 @@ import {
   Card, Title, Text, Button, Table, TableHead, TableRow, 
   TableHeaderCell, TableBody, TableCell, TextInput, 
   Select, SelectItem, Dialog, DialogPanel, Badge
-} from '@tremor/react';
+} from '@/components/ui/tremor-replacements';
 import { Search, Eye, Truck, CheckCircle, XCircle, Clock, Package, Plus, X, Calendar, User, DollarSign } from 'lucide-react';
 
 type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';

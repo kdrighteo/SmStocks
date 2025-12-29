@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, Title, Text, Tab, TabGroup, TabList, TabPanel, TabPanels, Metric, Badge } from '@tremor/react';
+import { Card, Title, Text, Tab, TabGroup, TabList, TabPanel, TabPanels, Metric, Badge } from '@/components/ui/tremor-replacements';
 import { Button } from '@/components/ui/button';
 import { Download, BarChart2, TrendingUp, ShoppingBag, Users, Tag, Package } from 'lucide-react';
 

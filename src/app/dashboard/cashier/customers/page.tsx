@@ -3,7 +3,7 @@
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { Card, Title, Text, TextInput, Button, Table, TableHead, TableRow, TableHeaderCell, TableBody, TableCell, Badge } from '@tremor/react';
+import { Card, Title, Text, TextInput, Button, Table, TableHead, TableRow, TableHeaderCell, TableBody, TableCell, Badge } from '@/components/ui/tremor-replacements';
 import { Search, User, Phone, Mail, ShoppingCart, ArrowLeft, X, Check, Edit } from 'lucide-react';
 
 // Mock customer data

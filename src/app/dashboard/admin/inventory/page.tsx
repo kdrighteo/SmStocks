@@ -7,7 +7,7 @@ import {
   Card, Title, Text, Button, Table, TableHead, TableRow, 
   TableHeaderCell, TableBody, TableCell, Badge, TextInput, 
   Select, SelectItem, Toggle, ToggleItem, Dialog, DialogPanel
-} from '@tremor/react';
+} from '@/components/ui/tremor-replacements';
 import { Plus, Search, Edit, Trash2, Box, Package, PackagePlus } from 'lucide-react';
 
 type InventoryItem = {

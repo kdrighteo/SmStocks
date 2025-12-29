@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, Title, Text, Table, TableHead, TableRow, TableHeaderCell, TableBody, TableCell, Badge } from '@tremor/react';
+import { Card, Title, Text, Table, TableHead, TableRow, TableHeaderCell, TableBody, TableCell, Badge } from '@/components/ui/tremor-replacements';
 import { Button } from '@/components/ui/button';
 import { Plus, Search, MoreHorizontal, Pencil, Trash } from 'lucide-react';
 import { Input } from '@/components/ui/input';

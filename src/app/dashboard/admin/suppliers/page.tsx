@@ -5,7 +5,7 @@ import {
   Card, Title, Text, Table, TableHead, TableRow, TableHeaderCell, 
   TableBody, TableCell, Badge, TextInput, Select, SelectItem,
   Button, Dialog, DialogPanel
-} from '@tremor/react';
+} from '@/components/ui/tremor-replacements';
 import { Plus, Search, Edit, Trash2, Phone, Mail, Building, MoreHorizontal } from 'lucide-react';
 
 type Supplier = {

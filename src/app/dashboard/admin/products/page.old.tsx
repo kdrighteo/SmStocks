@@ -3,7 +3,7 @@
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { Card, Text, Button, Table, TableHead, TableRow, TableHeaderCell, TableBody, TableCell, Badge, TextInput } from '@tremor/react';
+import { Card, Text, Button, Table, TableHead, TableRow, TableHeaderCell, TableBody, TableCell, Badge, TextInput } from '@/components/ui/tremor-replacements';
 import { Plus, Search, Edit, Trash2 } from 'lucide-react';
 
 type Product = {

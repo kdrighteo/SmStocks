@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { 
   Card, Title, Text, Button, Tab, TabGroup, TabList, 
   TabPanel, TabPanels, TextInput, Select, SelectItem, Toggle, Switch
-} from '@tremor/react';
+} from '@/components/ui/tremor-replacements';
 import { Settings, Store, CreditCard, Bell, Save } from 'lucide-react';
 
 type SettingsTab = 'store' | 'payments' | 'notifications';

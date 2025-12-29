@@ -3,7 +3,7 @@
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Card, Title, Text, Button } from '@tremor/react';
+import { Card, Title, Text, Button } from '@/components/ui/tremor-replacements';
 import { ArrowLeft, RefreshCw, CheckCircle, XCircle } from 'lucide-react';
 
 export default function ReturnsPage() {

@@ -5,7 +5,7 @@ import {
   Card, Title, Text, Button, Table, TableHead, TableRow, 
   TableHeaderCell, TableBody, TableCell, TextInput, Badge,
   Select, SelectItem, Dialog, DialogPanel
-} from '@tremor/react';
+} from '@/components/ui/tremor-replacements';
 import { Plus, Search, Edit, Trash2, Package, DollarSign, Tag, Check, X } from 'lucide-react';
 
 type ProductStatus = 'in_stock' | 'low_stock' | 'out_of_stock';

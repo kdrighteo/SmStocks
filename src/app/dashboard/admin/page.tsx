@@ -4,7 +4,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { Card, LineChart, Title, Text, Metric, ProgressBar, Tab, TabGroup, TabList, TabPanel, TabPanels } from '@tremor/react';
+import { Card, LineChart, Title, Text, Metric, ProgressBar, Tab, TabGroup, TabList, TabPanel, TabPanels } from '@/components/ui/tremor-replacements';
 import { ShoppingCart, Users, Package, DollarSign, Box, CreditCard, RefreshCw, Tag, BarChart, Settings, FileText, Truck, AlertCircle, UserCheck } from 'lucide-react';
 import { DashboardCard } from '@/components/dashboard/DashboardCard';
 

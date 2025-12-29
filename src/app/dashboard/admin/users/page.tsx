@@ -5,7 +5,7 @@ import {
   Card, Title, Text, Table, TableHead, TableRow, TableHeaderCell, 
   TableBody, TableCell, TextInput, Select, SelectItem,
   Button, Dialog, DialogPanel
-} from '@tremor/react';
+} from '@/components/ui/tremor-replacements';
 import Image from 'next/image';
 import { Search, User, UserPlus, Shield, CheckCircle, XCircle, Pencil, Trash2 } from 'lucide-react';
 

@@ -7,7 +7,7 @@ import {
   Card, Title, Text, Button, Table, TableHead, TableRow, 
   TableHeaderCell, TableBody, TableCell, TextInput, 
   Select, SelectItem
-} from '@tremor/react';
+} from '@/components/ui/tremor-replacements';
 import Image from 'next/image';
 import { Search, User, Mail, Phone, Plus, Edit, Trash2 } from 'lucide-react';
 
