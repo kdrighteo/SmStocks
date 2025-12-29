@@ -38,6 +38,8 @@ const topProducts = [
 export default function ReportsPage() {
   const [timeRange, setTimeRange] = useState('last_30_days');
   const [categoryFilter, setCategoryFilter] = useState('all');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -68,9 +70,19 @@ export default function ReportsPage() {
             <SelectItem value="last_month">Last Month</SelectItem>
             <SelectItem value="this_year">This Year</SelectItem>
           </Select>
-          <Button variant="light" className="w-full md:w-auto">
+          <Button 
+            variant="light" 
+            className="w-full md:w-auto"
+            onClick={async () => {
+              setIsExporting(true);
+              await new Promise(resolve => setTimeout(resolve, 1000));
+              alert('Report exported successfully!');
+              setIsExporting(false);
+            }}
+            disabled={isExporting}
+          >
             <Download className="mr-2 h-4 w-4" />
-            Export
+            {isExporting ? 'Exporting...' : 'Export'}
           </Button>
         </div>
       </div>
@@ -131,8 +143,15 @@ export default function ReportsPage() {
                     size="xs" 
                     icon={Download}
                     className="ml-2"
+                    onClick={async () => {
+                      setIsExporting(true);
+                      await new Promise(resolve => setTimeout(resolve, 1000));
+                      alert('Sales report exported successfully!');
+                      setIsExporting(false);
+                    }}
+                    disabled={isExporting}
                   >
-                    Export
+                    {isExporting ? 'Exporting...' : 'Export'}
                   </Button>
                   <span className="ml-2 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
                     Top Seller

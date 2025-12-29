@@ -77,6 +77,10 @@ export default function ProductsPage() {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>(mockProducts);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState<string | null>(null);
   const [form, setForm] = useState({
     name: '',
     sku: '',
@@ -86,10 +90,20 @@ export default function ProductsPage() {
   });
 
   useEffect(() => {
-    if (!isAddModalOpen) {
-      setForm({ name: '', sku: '', category: 'sofas', price: '', stock: '' });
+    if (isAddModalOpen) {
+      if (selectedProduct) {
+        setForm({
+          name: selectedProduct.name,
+          sku: selectedProduct.sku,
+          category: selectedProduct.category,
+          price: selectedProduct.price.toString(),
+          stock: selectedProduct.stock.toString(),
+        });
+      } else {
+        setForm({ name: '', sku: '', category: 'sofas', price: '', stock: '' });
+      }
     }
-  }, [isAddModalOpen]);
+  }, [isAddModalOpen, selectedProduct]);
 
   // Filter products
   const filteredProducts = useMemo(() => {
@@ -127,6 +141,76 @@ export default function ProductsPage() {
     }).format(amount);
   };
 
+  // Handle edit product
+  const handleEditProduct = (product: Product) => {
+    setSelectedProduct(product);
+    setIsEditing(true);
+    setIsAddModalOpen(true);
+  };
+
+  // Handle delete product
+  const handleDeleteProduct = async (id: string) => {
+    if (!window.confirm('Are you sure you want to delete this product?')) {
+      return;
+    }
+    setIsDeleting(id);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 500));
+    setProducts((prev) => prev.filter((p) => p.id !== id));
+    setIsDeleting(null);
+  };
+
+  // Handle save product (add or update)
+  const handleSaveProduct = async () => {
+    const price = parseFloat(form.price || '0');
+    const stock = parseInt(form.stock || '0', 10);
+    if (!form.name || !form.sku || isNaN(price) || isNaN(stock)) {
+      alert('Please fill in all required fields with valid values');
+      return;
+    }
+
+    setIsLoading(true);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 800));
+
+    const status: ProductStatus =
+      stock === 0 ? 'out_of_stock' : stock <= 5 ? 'low_stock' : 'in_stock';
+
+    if (isEditing && selectedProduct) {
+      setProducts((prev) =>
+        prev.map((p) =>
+          p.id === selectedProduct.id
+            ? {
+                ...p,
+                name: form.name,
+                sku: form.sku,
+                category: form.category,
+                price,
+                stock,
+                status,
+              }
+            : p
+        )
+      );
+    } else {
+      const newProduct: Product = {
+        id: `PROD-${String(products.length + 1).padStart(6, '0')}`,
+        name: form.name,
+        sku: form.sku,
+        category: form.category,
+        price,
+        stock,
+        status,
+      };
+      setProducts((prev) => [newProduct, ...prev]);
+    }
+
+    setIsLoading(false);
+    setIsAddModalOpen(false);
+    setSelectedProduct(null);
+    setIsEditing(false);
+  };
+
   return (
     <div className="p-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
@@ -137,50 +221,74 @@ export default function ProductsPage() {
         <Button
           icon={Plus}
           className="mt-4 md:mt-0 w-full md:w-auto"
-          onClick={() => setIsAddModalOpen(true)}
+          onClick={() => {
+            setSelectedProduct(null);
+            setIsEditing(false);
+            setIsAddModalOpen(true);
+          }}
         >
           Add Product
         </Button>
       </div>
 
       <Card className="mb-6">
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
-          <div className="flex-1">
-            <Text>Search</Text>
-            <TextInput 
-              icon={Search}
-              placeholder="Search products..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+        <div className="space-y-4 mb-6">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1">
+              <Text>Search</Text>
+              <TextInput 
+                icon={Search}
+                placeholder="Search by name, SKU, or description..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <div className="w-full md:w-48">
+              <Text>Category</Text>
+              <Select 
+                value={categoryFilter}
+                onValueChange={setCategoryFilter}
+              >
+                <SelectItem value="all">All Categories</SelectItem>
+                <SelectItem value="sofas">Sofas</SelectItem>
+                <SelectItem value="dining">Dining</SelectItem>
+                <SelectItem value="beds">Beds</SelectItem>
+                <SelectItem value="chairs">Chairs</SelectItem>
+                <SelectItem value="tables">Tables</SelectItem>
+                <SelectItem value="storage">Storage</SelectItem>
+              </Select>
+            </div>
+            <div className="w-full md:w-48">
+              <Text>Status</Text>
+              <Select 
+                value={statusFilter}
+                onValueChange={setStatusFilter}
+              >
+                <SelectItem value="all">All Statuses</SelectItem>
+                <SelectItem value="in_stock">In Stock</SelectItem>
+                <SelectItem value="low_stock">Low Stock</SelectItem>
+                <SelectItem value="out_of_stock">Out of Stock</SelectItem>
+              </Select>
+            </div>
           </div>
-          <div className="w-full md:w-48">
-            <Text>Category</Text>
-            <Select 
-              value={categoryFilter}
-              onValueChange={setCategoryFilter}
-            >
-              <SelectItem value="all">All Categories</SelectItem>
-              <SelectItem value="sofas">Sofas</SelectItem>
-              <SelectItem value="dining">Dining</SelectItem>
-              <SelectItem value="beds">Beds</SelectItem>
-              <SelectItem value="chairs">Chairs</SelectItem>
-              <SelectItem value="tables">Tables</SelectItem>
-              <SelectItem value="storage">Storage</SelectItem>
-            </Select>
-          </div>
-          <div className="w-full md:w-48">
-            <Text>Status</Text>
-            <Select 
-              value={statusFilter}
-              onValueChange={setStatusFilter}
-            >
-              <SelectItem value="all">All Statuses</SelectItem>
-              <SelectItem value="in_stock">In Stock</SelectItem>
-              <SelectItem value="low_stock">Low Stock</SelectItem>
-              <SelectItem value="out_of_stock">Out of Stock</SelectItem>
-            </Select>
-          </div>
+          {(searchTerm || categoryFilter !== 'all' || statusFilter !== 'all') && (
+            <div className="flex items-center gap-2 text-sm">
+              <Text className="text-gray-600">
+                Showing {filteredProducts.length} of {products.length} products
+              </Text>
+              <Button
+                variant="light"
+                size="xs"
+                onClick={() => {
+                  setSearchTerm('');
+                  setCategoryFilter('all');
+                  setStatusFilter('all');
+                }}
+              >
+                Clear Filters
+              </Button>
+            </div>
+          )}
         </div>
 
         <div className="overflow-x-auto">
@@ -236,15 +344,19 @@ export default function ProductsPage() {
                         icon={Edit} 
                         size="xs" 
                         variant="light"
-                        onClick={() => {}}
+                        onClick={() => handleEditProduct(product)}
+                        disabled={isDeleting === product.id}
                       />
                       <Button 
                         icon={Trash2} 
                         size="xs" 
                         variant="light" 
                         color="red"
-                        onClick={() => {}}
-                      />
+                        onClick={() => handleDeleteProduct(product.id)}
+                        disabled={isDeleting === product.id || isLoading}
+                      >
+                        {isDeleting === product.id ? '...' : ''}
+                      </Button>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -255,10 +367,16 @@ export default function ProductsPage() {
       </Card>
 
       {/* Add/Edit Product Modal */}
-      <Dialog open={isAddModalOpen} onClose={setIsAddModalOpen}>
+      <Dialog open={isAddModalOpen} onClose={() => {
+        if (!isLoading) {
+          setIsAddModalOpen(false);
+          setSelectedProduct(null);
+          setIsEditing(false);
+        }
+      }}>
         <DialogPanel>
           <h3 className="text-lg font-medium mb-2">
-            Add New Product
+            {isEditing ? 'Edit Product' : 'Add New Product'}
           </h3>
           
           <div className="mt-4 space-y-4">
@@ -327,33 +445,20 @@ export default function ProductsPage() {
             <div className="flex justify-end space-x-2 pt-4">
               <Button 
                 variant="light" 
-                onClick={() => setIsAddModalOpen(false)}
+                onClick={() => {
+                  setIsAddModalOpen(false);
+                  setSelectedProduct(null);
+                  setIsEditing(false);
+                }}
+                disabled={isLoading}
               >
                 Cancel
               </Button>
               <Button
-                onClick={() => {
-                  const price = parseFloat(form.price || '0');
-                  const stock = parseInt(form.stock || '0', 10);
-                  if (!form.name || !form.sku || isNaN(price) || isNaN(stock)) {
-                    return;
-                  }
-                  const status: ProductStatus =
-                    stock === 0 ? 'out_of_stock' : stock <= 5 ? 'low_stock' : 'in_stock';
-                  const newProduct: Product = {
-                    id: `PROD-${products.length + 1}`.padStart(8, '0'),
-                    name: form.name,
-                    sku: form.sku,
-                    category: form.category,
-                    price,
-                    stock,
-                    status,
-                  };
-                  setProducts((prev) => [newProduct, ...prev]);
-                  setIsAddModalOpen(false);
-                }}
+                onClick={handleSaveProduct}
+                disabled={isLoading}
               >
-                Add Product
+                {isLoading ? 'Saving...' : isEditing ? 'Update Product' : 'Add Product'}
               </Button>
             </div>
           </div>

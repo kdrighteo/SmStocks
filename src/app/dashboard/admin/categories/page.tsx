@@ -170,27 +170,46 @@ export default function CategoriesPage() {
       </div>
 
       <Card className="mb-6">
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
-          <div className="flex-1">
-            <Text>Search</Text>
-            <TextInput 
-              icon={Search}
-              placeholder="Search categories..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+        <div className="space-y-4 mb-6">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1">
+              <Text>Search</Text>
+              <TextInput 
+                icon={Search}
+                placeholder="Search by name, slug, or description..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <div className="w-full md:w-48">
+              <Text>Status</Text>
+              <Select 
+                value={statusFilter}
+                onValueChange={(value) => setStatusFilter(value as 'all' | 'active' | 'archived')}
+              >
+                <SelectItem value="all">All Statuses</SelectItem>
+                <SelectItem value="active">Active</SelectItem>
+                <SelectItem value="archived">Archived</SelectItem>
+              </Select>
+            </div>
           </div>
-          <div className="w-full md:w-48">
-            <Text>Status</Text>
-            <Select 
-              value={statusFilter}
-              onValueChange={(value) => setStatusFilter(value as 'all' | 'active' | 'archived')}
-            >
-              <SelectItem value="all">All Statuses</SelectItem>
-              <SelectItem value="active">Active</SelectItem>
-              <SelectItem value="archived">Archived</SelectItem>
-            </Select>
-          </div>
+          {(searchTerm || statusFilter !== 'all') && (
+            <div className="flex items-center gap-2 text-sm">
+              <Text className="text-gray-600">
+                Showing {filteredCategories.length} of {categories.length} categories
+              </Text>
+              <Button
+                variant="light"
+                size="xs"
+                onClick={() => {
+                  setSearchTerm('');
+                  setStatusFilter('all');
+                }}
+              >
+                Clear Filters
+              </Button>
+            </div>
+          )}
         </div>
 
         <div className="overflow-x-auto">

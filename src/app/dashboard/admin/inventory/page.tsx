@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { 
@@ -41,6 +41,10 @@ export default function InventoryPage() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [items, setItems] = useState<InventoryItem[]>(mockInventory);
+  const [selectedItem, setSelectedItem] = useState<InventoryItem | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState<number | null>(null);
   const [form, setForm] = useState({
     name: '',
     category: '',
@@ -50,6 +54,32 @@ export default function InventoryPage() {
     quantity: '',
     lowStockThreshold: '3',
   });
+
+  useEffect(() => {
+    if (isAddModalOpen) {
+      if (selectedItem) {
+        setForm({
+          name: selectedItem.name,
+          category: selectedItem.category,
+          sku: selectedItem.sku,
+          price: selectedItem.price.toString(),
+          cost: selectedItem.cost.toString(),
+          quantity: selectedItem.quantity.toString(),
+          lowStockThreshold: selectedItem.lowStockThreshold.toString(),
+        });
+      } else {
+        setForm({
+          name: '',
+          category: '',
+          sku: '',
+          price: '',
+          cost: '',
+          quantity: '',
+          lowStockThreshold: '3',
+        });
+      }
+    }
+  }, [isAddModalOpen, selectedItem]);
   
   // Get unique categories for filter
   const categories = useMemo(() => {
@@ -97,6 +127,82 @@ export default function InventoryPage() {
     return <Badge color={color}>{label}</Badge>;
   };
 
+  // Handle edit item
+  const handleEditItem = (item: InventoryItem) => {
+    setSelectedItem(item);
+    setIsEditing(true);
+    setIsAddModalOpen(true);
+  };
+
+  // Handle delete item
+  const handleDeleteItem = async (id: number) => {
+    if (!window.confirm('Are you sure you want to delete this inventory item?')) {
+      return;
+    }
+    setIsDeleting(id);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 500));
+    setItems((prev) => prev.filter((item) => item.id !== id));
+    setIsDeleting(null);
+  };
+
+  // Handle save item (add or update)
+  const handleSaveItem = async () => {
+    const price = parseFloat(form.price || '0');
+    const cost = parseFloat(form.cost || '0');
+    const quantity = parseInt(form.quantity || '0', 10);
+    const threshold = parseInt(form.lowStockThreshold || '0', 10);
+    if (!form.name || !form.sku || !form.category || isNaN(price) || isNaN(cost) || isNaN(quantity)) {
+      alert('Please fill in all required fields with valid values');
+      return;
+    }
+
+    setIsLoading(true);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 800));
+
+    const status: InventoryItem['status'] =
+      quantity === 0 ? 'out_of_stock' : quantity <= threshold ? 'low_stock' : 'in_stock';
+
+    if (isEditing && selectedItem) {
+      setItems((prev) =>
+        prev.map((item) =>
+          item.id === selectedItem.id
+            ? {
+                ...item,
+                name: form.name,
+                category: form.category,
+                sku: form.sku,
+                price,
+                cost,
+                quantity,
+                lowStockThreshold: threshold || 0,
+                status,
+              }
+            : item
+        )
+      );
+    } else {
+      const newItem: InventoryItem = {
+        id: items.length + 1,
+        name: form.name,
+        category: form.category,
+        sku: form.sku,
+        price,
+        cost,
+        quantity,
+        lowStockThreshold: threshold || 0,
+        status,
+      };
+      setItems((prev) => [newItem, ...prev]);
+    }
+
+    setIsLoading(false);
+    setIsAddModalOpen(false);
+    setSelectedItem(null);
+    setIsEditing(false);
+  };
+
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
@@ -104,47 +210,74 @@ export default function InventoryPage() {
           <h1 className="text-2xl font-bold">Inventory</h1>
           <p className="text-gray-600">Manage your product inventory</p>
         </div>
-        <Button icon={PackagePlus} onClick={() => setIsAddModalOpen(true)}>
+        <Button 
+          icon={PackagePlus} 
+          onClick={() => {
+            setSelectedItem(null);
+            setIsEditing(false);
+            setIsAddModalOpen(true);
+          }}
+        >
           Add Item
         </Button>
       </div>
 
       <Card className="mb-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div className="md:col-span-1">
-            <Text>Search</Text>
-            <TextInput 
-              icon={Search}
-              placeholder="Search inventory..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+        <div className="space-y-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="md:col-span-1">
+              <Text>Search</Text>
+              <TextInput 
+                icon={Search}
+                placeholder="Search by name, SKU, or category..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <div>
+              <Text>Category</Text>
+              <Select 
+                value={categoryFilter}
+                onValueChange={setCategoryFilter}
+              >
+                {categories.map(category => (
+                  <SelectItem key={category} value={category === 'All Categories' ? 'all' : category}>
+                    {category}
+                  </SelectItem>
+                ))}
+              </Select>
+            </div>
+            <div>
+              <Text>Status</Text>
+              <Select 
+                value={statusFilter}
+                onValueChange={setStatusFilter}
+              >
+                <SelectItem value="all">All Statuses</SelectItem>
+                <SelectItem value="in_stock">In Stock</SelectItem>
+                <SelectItem value="low_stock">Low Stock</SelectItem>
+                <SelectItem value="out_of_stock">Out of Stock</SelectItem>
+              </Select>
+            </div>
           </div>
-          <div>
-            <Text>Category</Text>
-            <Select 
-              value={categoryFilter}
-              onValueChange={setCategoryFilter}
-            >
-              {categories.map(category => (
-                <SelectItem key={category} value={category === 'All Categories' ? 'all' : category}>
-                  {category}
-                </SelectItem>
-              ))}
-            </Select>
-          </div>
-          <div>
-            <Text>Status</Text>
-            <Select 
-              value={statusFilter}
-              onValueChange={setStatusFilter}
-            >
-              <SelectItem value="all">All Statuses</SelectItem>
-              <SelectItem value="in_stock">In Stock</SelectItem>
-              <SelectItem value="low_stock">Low Stock</SelectItem>
-              <SelectItem value="out_of_stock">Out of Stock</SelectItem>
-            </Select>
-          </div>
+          {(searchTerm || categoryFilter !== 'all' || statusFilter !== 'all') && (
+            <div className="flex items-center gap-2 text-sm">
+              <Text className="text-gray-600">
+                Showing {filteredInventory.length} of {items.length} items
+              </Text>
+              <Button
+                variant="light"
+                size="xs"
+                onClick={() => {
+                  setSearchTerm('');
+                  setCategoryFilter('all');
+                  setStatusFilter('all');
+                }}
+              >
+                Clear Filters
+              </Button>
+            </div>
+          )}
         </div>
 
         <div className="overflow-x-auto">
@@ -182,8 +315,23 @@ export default function InventoryPage() {
                   <TableCell>{getStatusBadge(item)}</TableCell>
                   <TableCell>
                     <div className="flex space-x-2">
-                      <Button icon={Edit} size="xs" variant="light" />
-                      <Button icon={Trash2} size="xs" variant="light" color="red" />
+                      <Button 
+                        icon={Edit} 
+                        size="xs" 
+                        variant="light"
+                        onClick={() => handleEditItem(item)}
+                        disabled={isDeleting === item.id}
+                      />
+                      <Button 
+                        icon={Trash2} 
+                        size="xs" 
+                        variant="light" 
+                        color="red"
+                        onClick={() => handleDeleteItem(item.id)}
+                        disabled={isDeleting === item.id || isLoading}
+                      >
+                        {isDeleting === item.id ? '...' : ''}
+                      </Button>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -193,12 +341,18 @@ export default function InventoryPage() {
         </div>
       </Card>
 
-      {/* Add Item Modal */}
-      <Dialog open={isAddModalOpen} onClose={setIsAddModalOpen}>
+      {/* Add/Edit Item Modal */}
+      <Dialog open={isAddModalOpen} onClose={() => {
+        if (!isLoading) {
+          setIsAddModalOpen(false);
+          setSelectedItem(null);
+          setIsEditing(false);
+        }
+      }}>
         <DialogPanel>
           <div className="mb-6">
-            <Title>Add New Inventory Item</Title>
-            <Text>Add a new product to your inventory</Text>
+            <Title>{isEditing ? 'Edit Inventory Item' : 'Add New Inventory Item'}</Title>
+            <Text>{isEditing ? 'Update product information' : 'Add a new product to your inventory'}</Text>
           </div>
           
           <div className="space-y-4">
@@ -273,46 +427,20 @@ export default function InventoryPage() {
             <div className="mt-6 flex justify-end space-x-3">
               <Button 
                 variant="light" 
-                onClick={() => setIsAddModalOpen(false)}
+                onClick={() => {
+                  setIsAddModalOpen(false);
+                  setSelectedItem(null);
+                  setIsEditing(false);
+                }}
+                disabled={isLoading}
               >
                 Cancel
               </Button>
               <Button
-                onClick={() => {
-                  const price = parseFloat(form.price || '0');
-                  const cost = parseFloat(form.cost || '0');
-                  const quantity = parseInt(form.quantity || '0', 10);
-                  const threshold = parseInt(form.lowStockThreshold || '0', 10);
-                  if (!form.name || !form.sku || !form.category || isNaN(price) || isNaN(cost) || isNaN(quantity)) {
-                    return;
-                  }
-                  const status: InventoryItem['status'] =
-                    quantity === 0 ? 'out_of_stock' : quantity <= threshold ? 'low_stock' : 'in_stock';
-                  const newItem: InventoryItem = {
-                    id: items.length + 1,
-                    name: form.name,
-                    category: form.category,
-                    sku: form.sku,
-                    price,
-                    cost,
-                    quantity,
-                    lowStockThreshold: threshold || 0,
-                    status,
-                  };
-                  setItems((prev) => [newItem, ...prev]);
-                  setIsAddModalOpen(false);
-                  setForm({
-                    name: '',
-                    category: '',
-                    sku: '',
-                    price: '',
-                    cost: '',
-                    quantity: '',
-                    lowStockThreshold: '3',
-                  });
-                }}
+                onClick={handleSaveItem}
+                disabled={isLoading}
               >
-                Add Item
+                {isLoading ? 'Saving...' : isEditing ? 'Update Item' : 'Add Item'}
               </Button>
             </div>
           </div>
