@@ -179,27 +179,37 @@ export default function UsersPage() {
           </div>
           <div className="w-full md:w-48">
             <Text>Role</Text>
-            <Select 
+            <Select
               value={roleFilter}
               onValueChange={setRoleFilter}
             >
-              <SelectItem value="all">All Roles</SelectItem>
-              <SelectItem value="admin">Admin</SelectItem>
-              <SelectItem value="manager">Manager</SelectItem>
-              <SelectItem value="cashier">Cashier</SelectItem>
-              <SelectItem value="staff">Staff</SelectItem>
+              <SelectTrigger>
+                <SelectValue placeholder="All Roles" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Roles</SelectItem>
+                <SelectItem value="admin">Admin</SelectItem>
+                <SelectItem value="manager">Manager</SelectItem>
+                <SelectItem value="cashier">Cashier</SelectItem>
+                <SelectItem value="staff">Staff</SelectItem>
+              </SelectContent>
             </Select>
           </div>
           <div className="w-full md:w-48">
             <Text>Status</Text>
-            <Select 
+            <Select
               value={statusFilter}
               onValueChange={setStatusFilter}
             >
-              <SelectItem value="all">All Statuses</SelectItem>
-              <SelectItem value="active">Active</SelectItem>
-              <SelectItem value="inactive">Inactive</SelectItem>
-              <SelectItem value="suspended">Suspended</SelectItem>
+              <SelectTrigger>
+                <SelectValue placeholder="All Statuses" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Statuses</SelectItem>
+                <SelectItem value="active">Active</SelectItem>
+                <SelectItem value="inactive">Inactive</SelectItem>
+                <SelectItem value="suspended">Suspended</SelectItem>
+              </SelectContent>
             </Select>
           </div>
         </div>

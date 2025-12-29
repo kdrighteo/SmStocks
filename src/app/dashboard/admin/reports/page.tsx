@@ -64,18 +64,22 @@ export default function ReportsPage() {
           <p className="text-gray-600">Analyze your business performance</p>
         </div>
         <div className="flex flex-col sm:flex-row gap-3 mt-4 md:mt-0 w-full md:w-auto">
-          <Select 
-            value={timeRange} 
+          <Select
+            value={timeRange}
             onValueChange={setTimeRange}
-            className="w-full md:w-48"
           >
-            <SelectItem value="today">Today</SelectItem>
-            <SelectItem value="yesterday">Yesterday</SelectItem>
-            <SelectItem value="last_7_days">Last 7 days</SelectItem>
-            <SelectItem value="last_30_days">Last 30 days</SelectItem>
-            <SelectItem value="this_month">This Month</SelectItem>
-            <SelectItem value="last_month">Last Month</SelectItem>
-            <SelectItem value="this_year">This Year</SelectItem>
+            <SelectTrigger className="w-full md:w-48">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="today">Today</SelectItem>
+              <SelectItem value="yesterday">Yesterday</SelectItem>
+              <SelectItem value="last_7_days">Last 7 days</SelectItem>
+              <SelectItem value="last_30_days">Last 30 days</SelectItem>
+              <SelectItem value="this_month">This Month</SelectItem>
+              <SelectItem value="last_month">Last Month</SelectItem>
+              <SelectItem value="this_year">This Year</SelectItem>
+            </SelectContent>
           </Select>
           <Button 
             variant="light" 
@@ -189,16 +193,20 @@ export default function ReportsPage() {
                   <Title>Top Selling Products</Title>
                   <Text>Best performing products by revenue</Text>
                 </div>
-                <Select 
-                  value={categoryFilter} 
+                <Select
+                  value={categoryFilter}
                   onValueChange={setCategoryFilter}
-                  className="w-48"
                 >
-                  <SelectItem value="all">All Categories</SelectItem>
-                  <SelectItem value="living_room">Living Room</SelectItem>
-                  <SelectItem value="bedroom">Bedroom</SelectItem>
-                  <SelectItem value="dining">Dining</SelectItem>
-                  <SelectItem value="office">Office</SelectItem>
+                  <SelectTrigger className="w-48">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Categories</SelectItem>
+                    <SelectItem value="living_room">Living Room</SelectItem>
+                    <SelectItem value="bedroom">Bedroom</SelectItem>
+                    <SelectItem value="dining">Dining</SelectItem>
+                    <SelectItem value="office">Office</SelectItem>
+                  </SelectContent>
                 </Select>
               </div>
               <div className="overflow-x-auto">

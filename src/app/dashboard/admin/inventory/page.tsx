@@ -240,27 +240,37 @@ export default function InventoryPage() {
             </div>
             <div>
               <Text>Category</Text>
-              <Select 
+              <Select
                 value={categoryFilter}
                 onValueChange={setCategoryFilter}
               >
-                {categories.map(category => (
-                  <SelectItem key={category} value={category === 'All Categories' ? 'all' : category}>
-                    {category}
-                  </SelectItem>
-                ))}
+                <SelectTrigger>
+                  <SelectValue placeholder="All Categories" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map(category => (
+                    <SelectItem key={category} value={category === 'All Categories' ? 'all' : category}>
+                      {category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
               </Select>
             </div>
             <div>
               <Text>Status</Text>
-              <Select 
+              <Select
                 value={statusFilter}
                 onValueChange={setStatusFilter}
               >
-                <SelectItem value="all">All Statuses</SelectItem>
-                <SelectItem value="in_stock">In Stock</SelectItem>
-                <SelectItem value="low_stock">Low Stock</SelectItem>
-                <SelectItem value="out_of_stock">Out of Stock</SelectItem>
+                <SelectTrigger>
+                  <SelectValue placeholder="All Statuses" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Statuses</SelectItem>
+                  <SelectItem value="in_stock">In Stock</SelectItem>
+                  <SelectItem value="low_stock">Low Stock</SelectItem>
+                  <SelectItem value="out_of_stock">Out of Stock</SelectItem>
+                </SelectContent>
               </Select>
             </div>
           </div>
@@ -384,11 +394,16 @@ export default function InventoryPage() {
                   value={form.category}
                   onValueChange={(value) => setForm((f) => ({ ...f, category: value }))}
                 >
-                  {categories.filter(cat => cat !== 'All Categories').map(category => (
-                    <SelectItem key={category} value={category}>
-                      {category}
-                    </SelectItem>
-                  ))}
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.filter(cat => cat !== 'All Categories').map(category => (
+                      <SelectItem key={category} value={category}>
+                        {category}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
                 </Select>
               </div>
             </div>

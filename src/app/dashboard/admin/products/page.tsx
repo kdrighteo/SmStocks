@@ -252,29 +252,39 @@ export default function ProductsPage() {
             </div>
             <div className="w-full md:w-48">
               <Text>Category</Text>
-              <Select 
+              <Select
                 value={categoryFilter}
                 onValueChange={setCategoryFilter}
               >
-                <SelectItem value="all">All Categories</SelectItem>
-                <SelectItem value="sofas">Sofas</SelectItem>
-                <SelectItem value="dining">Dining</SelectItem>
-                <SelectItem value="beds">Beds</SelectItem>
-                <SelectItem value="chairs">Chairs</SelectItem>
-                <SelectItem value="tables">Tables</SelectItem>
-                <SelectItem value="storage">Storage</SelectItem>
+                <SelectTrigger>
+                  <SelectValue placeholder="All Categories" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Categories</SelectItem>
+                  <SelectItem value="sofas">Sofas</SelectItem>
+                  <SelectItem value="dining">Dining</SelectItem>
+                  <SelectItem value="beds">Beds</SelectItem>
+                  <SelectItem value="chairs">Chairs</SelectItem>
+                  <SelectItem value="tables">Tables</SelectItem>
+                  <SelectItem value="storage">Storage</SelectItem>
+                </SelectContent>
               </Select>
             </div>
             <div className="w-full md:w-48">
               <Text>Status</Text>
-              <Select 
+              <Select
                 value={statusFilter}
                 onValueChange={setStatusFilter}
               >
-                <SelectItem value="all">All Statuses</SelectItem>
-                <SelectItem value="in_stock">In Stock</SelectItem>
-                <SelectItem value="low_stock">Low Stock</SelectItem>
-                <SelectItem value="out_of_stock">Out of Stock</SelectItem>
+                <SelectTrigger>
+                  <SelectValue placeholder="All Statuses" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Statuses</SelectItem>
+                  <SelectItem value="in_stock">In Stock</SelectItem>
+                  <SelectItem value="low_stock">Low Stock</SelectItem>
+                  <SelectItem value="out_of_stock">Out of Stock</SelectItem>
+                </SelectContent>
               </Select>
             </div>
           </div>
@@ -412,12 +422,17 @@ export default function ProductsPage() {
                   value={form.category}
                   onValueChange={(value) => setForm((f) => ({ ...f, category: value as ProductCategory }))}
                 >
-                  <SelectItem value="sofas">Sofas</SelectItem>
-                  <SelectItem value="dining">Dining</SelectItem>
-                  <SelectItem value="beds">Beds</SelectItem>
-                  <SelectItem value="chairs">Chairs</SelectItem>
-                  <SelectItem value="tables">Tables</SelectItem>
-                  <SelectItem value="storage">Storage</SelectItem>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="sofas">Sofas</SelectItem>
+                    <SelectItem value="dining">Dining</SelectItem>
+                    <SelectItem value="beds">Beds</SelectItem>
+                    <SelectItem value="chairs">Chairs</SelectItem>
+                    <SelectItem value="tables">Tables</SelectItem>
+                    <SelectItem value="storage">Storage</SelectItem>
+                  </SelectContent>
                 </Select>
               </div>
             </div>

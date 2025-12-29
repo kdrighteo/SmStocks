@@ -140,31 +140,39 @@ export default function SettingsPage() {
                   <div>
                     <label className="block text-sm font-medium mb-1">Currency</label>
                     <Select
-                      name="currency"
                       value={storeSettings.currency}
-                      onValueChange={(value) => 
+                      onValueChange={(value) =>
                         setStoreSettings(prev => ({ ...prev, currency: value }))
                       }
                     >
-                      <SelectItem value="USD">US Dollar ($)</SelectItem>
-                      <SelectItem value="EUR">Euro (€)</SelectItem>
-                      <SelectItem value="GBP">British Pound (£)</SelectItem>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="USD">US Dollar ($)</SelectItem>
+                        <SelectItem value="EUR">Euro (€)</SelectItem>
+                        <SelectItem value="GBP">British Pound (£)</SelectItem>
+                      </SelectContent>
                     </Select>
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium mb-1">Timezone</label>
                     <Select
-                      name="timezone"
                       value={storeSettings.timezone}
-                      onValueChange={(value) => 
+                      onValueChange={(value) =>
                         setStoreSettings(prev => ({ ...prev, timezone: value }))
                       }
                     >
-                      <SelectItem value="UTC-05:00">(UTC-05:00) Eastern Time</SelectItem>
-                      <SelectItem value="UTC-06:00">(UTC-06:00) Central Time</SelectItem>
-                      <SelectItem value="UTC-07:00">(UTC-07:00) Mountain Time</SelectItem>
-                      <SelectItem value="UTC-08:00">(UTC-08:00) Pacific Time</SelectItem>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="UTC-05:00">(UTC-05:00) Eastern Time</SelectItem>
+                        <SelectItem value="UTC-06:00">(UTC-06:00) Central Time</SelectItem>
+                        <SelectItem value="UTC-07:00">(UTC-07:00) Mountain Time</SelectItem>
+                        <SelectItem value="UTC-08:00">(UTC-08:00) Pacific Time</SelectItem>
+                      </SelectContent>
                     </Select>
                   </div>
                 </div>

@@ -92,14 +92,19 @@ export default function CustomersPage() {
           </div>
           <div className="w-full md:w-64">
             <Text>Status</Text>
-            <Select 
+            <Select
               value={statusFilter}
               onValueChange={setStatusFilter}
             >
-              <SelectItem value="all">All Statuses</SelectItem>
-              <SelectItem value="active">Active</SelectItem>
-              <SelectItem value="inactive">Inactive</SelectItem>
-              <SelectItem value="vip">VIP</SelectItem>
+              <SelectTrigger>
+                <SelectValue placeholder="All Statuses" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Statuses</SelectItem>
+                <SelectItem value="active">Active</SelectItem>
+                <SelectItem value="inactive">Inactive</SelectItem>
+                <SelectItem value="vip">VIP</SelectItem>
+              </SelectContent>
             </Select>
           </div>
         </div>

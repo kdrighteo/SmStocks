@@ -142,13 +142,18 @@ export default function SuppliersPage() {
           </div>
           <div className="w-full md:w-48">
             <Text>Status</Text>
-            <Select 
+            <Select
               value={statusFilter}
               onValueChange={(value) => setStatusFilter(value as 'all' | 'active' | 'inactive')}
             >
-              <SelectItem value="all">All Statuses</SelectItem>
-              <SelectItem value="active">Active</SelectItem>
-              <SelectItem value="inactive">Inactive</SelectItem>
+              <SelectTrigger>
+                <SelectValue placeholder="All Statuses" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Statuses</SelectItem>
+                <SelectItem value="active">Active</SelectItem>
+                <SelectItem value="inactive">Inactive</SelectItem>
+              </SelectContent>
             </Select>
           </div>
         </div>
@@ -278,8 +283,13 @@ export default function SuppliersPage() {
               <div>
                 <label className="block text-sm font-medium mb-1">Status</label>
                 <Select value={selectedSupplier?.status || 'active'}>
-                  <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="inactive">Inactive</SelectItem>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="inactive">Inactive</SelectItem>
+                  </SelectContent>
                 </Select>
               </div>
             </div>

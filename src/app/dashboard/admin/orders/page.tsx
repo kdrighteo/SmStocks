@@ -275,28 +275,38 @@ export default function OrdersPage() {
           </div>
           <div className="w-full md:w-48">
             <Text>Status</Text>
-            <Select 
+            <Select
               value={statusFilter}
               onValueChange={setStatusFilter}
             >
-              <SelectItem value="all">All Statuses</SelectItem>
-              <SelectItem value="pending">Pending</SelectItem>
-              <SelectItem value="processing">Processing</SelectItem>
-              <SelectItem value="shipped">Shipped</SelectItem>
-              <SelectItem value="delivered">Delivered</SelectItem>
-              <SelectItem value="cancelled">Cancelled</SelectItem>
+              <SelectTrigger>
+                <SelectValue placeholder="All Statuses" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Statuses</SelectItem>
+                <SelectItem value="pending">Pending</SelectItem>
+                <SelectItem value="processing">Processing</SelectItem>
+                <SelectItem value="shipped">Shipped</SelectItem>
+                <SelectItem value="delivered">Delivered</SelectItem>
+                <SelectItem value="cancelled">Cancelled</SelectItem>
+              </SelectContent>
             </Select>
           </div>
           <div className="w-full md:w-48">
             <Text>Date</Text>
-            <Select 
+            <Select
               value={dateFilter}
               onValueChange={setDateFilter}
             >
-              <SelectItem value="all">All Dates</SelectItem>
-              {getUniqueDates().map(date => (
-                <SelectItem key={date} value={date}>{date}</SelectItem>
-              ))}
+              <SelectTrigger>
+                <SelectValue placeholder="All Dates" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Dates</SelectItem>
+                {getUniqueDates().map(date => (
+                  <SelectItem key={date} value={date}>{date}</SelectItem>
+                ))}
+              </SelectContent>
             </Select>
           </div>
         </div>
