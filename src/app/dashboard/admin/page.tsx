@@ -91,7 +91,7 @@ export default function AdminDashboard() {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 space-y-4 md:space-y-0">
         <div>
           <Title className="text-2xl font-bold">Dashboard Overview</Title>
-          <Text className="text-gray-600">Welcome back, {user.name}! Here's what's happening with your store today.</Text>
+          <Text className="text-gray-600">Welcome back, {user.name}! Here&apos;s what&apos;s happening with your store today.</Text>
         </div>
         <div className="flex space-x-2 bg-white p-1 rounded-lg shadow-sm">
           {['Today', 'Week', 'Month', 'Year'].map((period) => (
