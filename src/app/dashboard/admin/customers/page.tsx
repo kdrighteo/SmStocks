@@ -3,11 +3,13 @@
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useState, useMemo } from 'react';
-import { 
-  Card, Title, Text, Button, Table, TableHead, TableRow, 
-  TableHeaderCell, TableBody, TableCell, TextInput, 
-  Select, SelectItem
-} from '@/components/ui/tremor-replacements';
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Title } from '@/components/ui/title'
+import { Text } from '@/components/ui/text'
+import { Button } from '@/components/ui/button'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Input } from '@/components/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import Image from 'next/image';
 import { Search, User, Mail, Phone, Plus, Edit, Trash2 } from 'lucide-react';
 
@@ -81,7 +83,7 @@ export default function CustomersPage() {
         <div className="flex flex-col md:flex-row gap-4 mb-6">
           <div className="flex-1">
             <Text>Search</Text>
-            <TextInput 
+            <Input 
               icon={Search}
               placeholder="Search customers..."
               value={searchTerm}
@@ -106,13 +108,13 @@ export default function CustomersPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableHeaderCell>Customer</TableHeaderCell>
-                <TableHeaderCell>Email</TableHeaderCell>
-                <TableHeaderCell>Phone</TableHeaderCell>
-                <TableHeaderCell className="text-right">Orders</TableHeaderCell>
-                <TableHeaderCell className="text-right">Total Spent</TableHeaderCell>
-                <TableHeaderCell>Status</TableHeaderCell>
-                <TableHeaderCell>Actions</TableHeaderCell>
+                <TableHeader>Customer</TableHeader>
+                <TableHeader>Email</TableHeader>
+                <TableHeader>Phone</TableHeader>
+                <TableHeader className="text-right">Orders</TableHeader>
+                <TableHeader className="text-right">Total Spent</TableHeader>
+                <TableHeader>Status</TableHeader>
+                <TableHeader>Actions</TableHeader>
               </TableRow>
             </TableHead>
             <TableBody>

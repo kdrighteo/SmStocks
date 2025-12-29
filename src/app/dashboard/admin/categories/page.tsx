@@ -1,11 +1,15 @@
 'use client';
 
 import { useEffect, useState, useMemo } from 'react';
-import { 
-  Card, Title, Text, Button, Table, TableHead, TableRow, 
-  TableHeaderCell, TableBody, TableCell, TextInput, Badge,
-  Select, SelectItem, Dialog, DialogPanel
-} from '@/components/ui/tremor-replacements';
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Title } from '@/components/ui/title'
+import { Text } from '@/components/ui/text'
+import { Button } from '@/components/ui/button'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Input } from '@/components/ui/input'
+import { Badge } from '@/components/ui/badge'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Plus, Search, Edit, Trash2, Folder, Image as ImageIcon, X, Check } from 'lucide-react';
 
 type Category = {
@@ -174,7 +178,7 @@ export default function CategoriesPage() {
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <Text>Search</Text>
-              <TextInput 
+              <Input 
                 icon={Search}
                 placeholder="Search by name, slug, or description..."
                 value={searchTerm}
@@ -216,12 +220,12 @@ export default function CategoriesPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableHeaderCell>Category</TableHeaderCell>
-                <TableHeaderCell>Description</TableHeaderCell>
-                <TableHeaderCell className="text-right">Products</TableHeaderCell>
-                <TableHeaderCell>Status</TableHeaderCell>
-                <TableHeaderCell>Featured</TableHeaderCell>
-                <TableHeaderCell>Actions</TableHeaderCell>
+                <TableHeader>Category</TableHeader>
+                <TableHeader>Description</TableHeader>
+                <TableHeader className="text-right">Products</TableHeader>
+                <TableHeader>Status</TableHeader>
+                <TableHeader>Featured</TableHeader>
+                <TableHeader>Actions</TableHeader>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -306,7 +310,7 @@ export default function CategoriesPage() {
 
       {/* Add/Edit Category Modal */}
       <Dialog open={isAddModalOpen} onClose={setIsAddModalOpen}>
-        <DialogPanel>
+        <DialogContent>
           <h3 className="text-lg font-medium mb-2">
             {isEditing ? 'Edit Category' : 'Add New Category'}
           </h3>
@@ -314,7 +318,7 @@ export default function CategoriesPage() {
           <form className="mt-4 space-y-4">
             <div>
               <label className="block text-sm font-medium mb-1">Name</label>
-              <TextInput 
+              <Input 
                 placeholder="e.g., Living Room Furniture"
                 value={form.name}
                 onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
@@ -323,7 +327,7 @@ export default function CategoriesPage() {
             
             <div>
               <label className="block text-sm font-medium mb-1">Slug</label>
-              <TextInput 
+              <Input 
                 placeholder="e.g., living-room"
                 value={form.slug}
                 onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
@@ -413,7 +417,7 @@ export default function CategoriesPage() {
               </div>
             </div>
           </form>
-        </DialogPanel>
+        </DialogContent>
       </Dialog>
     </div>
   );

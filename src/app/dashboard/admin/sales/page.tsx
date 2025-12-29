@@ -1,6 +1,11 @@
 'use client';
 
-import { Card, Title, Text, Metric, Badge, LineChart } from '@/components/ui/tremor-replacements';
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Title } from '@/components/ui/title'
+import { Text } from '@/components/ui/text'
+import { Metric } from '@/components/ui/metric'
+import { Badge } from '@/components/ui/badge'
+import { LineChart } from '@/components/ui/line-chart'
 import { ShoppingBag, TrendingUp, CreditCard } from 'lucide-react';
 
 const salesData = [

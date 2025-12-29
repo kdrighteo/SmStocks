@@ -4,7 +4,13 @@ import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { Card, LineChart, Title, Text, Metric, ProgressBar, Tab, TabGroup, TabList, TabPanel, TabPanels } from '@/components/ui/tremor-replacements';
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { LineChart } from '@/components/ui/line-chart'
+import { Title } from '@/components/ui/title'
+import { Text } from '@/components/ui/text'
+import { Metric } from '@/components/ui/metric'
+import { Progress } from '@/components/ui/progress'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ShoppingCart, Users, Package, DollarSign, Box, CreditCard, RefreshCw, Tag, BarChart, Settings, FileText, Truck, AlertCircle, UserCheck } from 'lucide-react';
 import { DashboardCard } from '@/components/dashboard/DashboardCard';
 
@@ -147,34 +153,38 @@ export default function AdminDashboard() {
         {/* Sales Overview */}
         <div className="lg:col-span-2">
           <Card className="h-full">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <Title>Sales Overview</Title>
-                <Text>Total sales by payment method</Text>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Title>Sales Overview</Title>
+                  <Text>Total sales by payment method</Text>
+                </div>
+                <div className="flex space-x-2">
+                  <button className="px-3 py-1 text-sm text-indigo-600 bg-indigo-50 rounded-md hover:bg-indigo-100">
+                    Export
+                  </button>
+                </div>
               </div>
-              <div className="flex space-x-2">
-                <button className="px-3 py-1 text-sm text-indigo-600 bg-indigo-50 rounded-md hover:bg-indigo-100">
-                  Export
-                </button>
-              </div>
-            </div>
-            <LineChart
-              className="mt-4 h-80"
-              data={salesData}
-              index="date"
-              categories={['Total Sales', 'POS', 'Momo', 'Bank Transfer']}
-              colors={['blue', 'green', 'yellow', 'red']}
-              yAxisWidth={60}
-              showLegend={true}
-            />
+            </CardHeader>
+            <CardContent>
+              <LineChart
+                className="h-80"
+                data={salesData}
+                index="date"
+                categories={['Total Sales', 'POS', 'Momo', 'Bank Transfer']}
+                colors={['blue', 'green', 'yellow', 'red']}
+              />
+            </CardContent>
           </Card>
         </div>
 
         {/* Quick Actions */}
         <div className="space-y-6">
           <Card>
-            <Title>Quick Actions</Title>
-            <div className="mt-4 space-y-3">
+            <CardHeader>
+              <Title>Quick Actions</Title>
+            </CardHeader>
+            <CardContent className="space-y-3">
               <Link
                 href="/dashboard/admin/orders"
                 className="flex items-center p-3 rounded-lg bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition-colors"
@@ -203,26 +213,27 @@ export default function AdminDashboard() {
                 <BarChart className="h-5 w-5 mr-3" />
                 <span>Generate Report</span>
               </Link>
-            </div>
+            </CardContent>
           </Card>
 
           <Card>
-            <Title>Inventory Status</Title>
-            <div className="mt-4 space-y-4">
+            <CardHeader>
+              <Title>Inventory Status</Title>
+            </CardHeader>
+            <CardContent className="space-y-4">
               {inventoryData.map((item) => (
                 <div key={item.name} className="space-y-2">
                   <div className="flex items-center justify-between">
                     <Text>{item.name}</Text>
                     <Text>{item.value} items</Text>
                   </div>
-                  <ProgressBar 
-                    value={item.value / 6.46} 
-                    color={item.color as any} 
+                  <Progress
+                    value={(item.value / 6.46) * 100}
                     className="h-2"
                   />
                 </div>
               ))}
-            </div>
+            </CardContent>
           </Card>
         </div>
       </div>

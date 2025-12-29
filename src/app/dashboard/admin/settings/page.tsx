@@ -1,10 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { 
-  Card, Title, Text, Button, Tab, TabGroup, TabList, 
-  TabPanel, TabPanels, TextInput, Select, SelectItem, Toggle, Switch
-} from '@/components/ui/tremor-replacements';
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Title } from '@/components/ui/title'
+import { Text } from '@/components/ui/text'
+import { Button } from '@/components/ui/button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Input } from '@/components/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Switch } from '@/components/ui/switch'
 import { Settings, Store, CreditCard, Bell, Save } from 'lucide-react';
 
 type SettingsTab = 'store' | 'payments' | 'notifications';
@@ -91,27 +95,23 @@ export default function SettingsPage() {
         </Button>
       </div>
 
-      <TabGroup 
-        index={['store', 'payments', 'notifications'].indexOf(activeTab)}
-        onIndexChange={(i) => setActiveTab(['store', 'payments', 'notifications'][i] as SettingsTab)}
-      >
-        <TabList className="mb-6">
-          <Tab icon={Store}>Store</Tab>
-          <Tab icon={CreditCard}>Payments</Tab>
-          <Tab icon={Bell}>Notifications</Tab>
-        </TabList>
+      <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as SettingsTab)}>
+        <TabsList className="mb-6">
+          <TabsTrigger value="store">Store</TabsTrigger>
+          <TabsTrigger value="payments">Payments</TabsTrigger>
+          <TabsTrigger value="notifications">Notifications</TabsTrigger>
+        </TabsList>
 
-        <form onSubmit={handleSubmit}>
-          <TabPanels>
-            {/* Store Settings */}
-            <TabPanel>
+        {/* Store Settings */}
+        <TabsContent value="store">
+          <form onSubmit={handleSubmit}>
               <Card className="space-y-6">
                 <Title>Store Information</Title>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium mb-1">Store Name</label>
-                    <TextInput
+                    <Input
                       name="storeName"
                       value={storeSettings.storeName}
                       onChange={handleStoreChange}
@@ -120,7 +120,7 @@ export default function SettingsPage() {
                   
                   <div>
                     <label className="block text-sm font-medium mb-1">Email</label>
-                    <TextInput
+                    <Input
                       name="email"
                       type="email"
                       value={storeSettings.email}
@@ -130,7 +130,7 @@ export default function SettingsPage() {
                   
                   <div>
                     <label className="block text-sm font-medium mb-1">Phone</label>
-                    <TextInput
+                    <Input
                       name="phone"
                       value={storeSettings.phone}
                       onChange={handleStoreChange}
@@ -169,10 +169,12 @@ export default function SettingsPage() {
                   </div>
                 </div>
               </Card>
-            </TabPanel>
+            </form>
+          </TabsContent>
 
-            {/* Payment Settings */}
-            <TabPanel>
+          {/* Payment Settings */}
+          <TabsContent value="payments">
+            <form onSubmit={handleSubmit}>
               <Card className="space-y-6">
                 <Title>Payment Methods</Title>
                 <Text>Enable or disable payment methods for your store</Text>
@@ -202,10 +204,12 @@ export default function SettingsPage() {
                   ))}
                 </div>
               </Card>
-            </TabPanel>
+            </form>
+          </TabsContent>
 
-            {/* Notification Settings */}
-            <TabPanel>
+          {/* Notification Settings */}
+          <TabsContent value="notifications">
+            <form onSubmit={handleSubmit}>
               <Card className="space-y-6">
                 <Title>Email Notifications</Title>
                 <Text>Manage your email notification preferences</Text>
@@ -231,10 +235,9 @@ export default function SettingsPage() {
                   ))}
                 </div>
               </Card>
-            </TabPanel>
-          </TabPanels>
-        </form>
-      </TabGroup>
+            </form>
+          </TabsContent>
+        </Tabs>
     </div>
   );
 }

@@ -3,7 +3,13 @@
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { Card, Title, Text, TextInput, Button, Table, TableHead, TableRow, TableHeaderCell, TableBody, TableCell, Badge } from '@/components/ui/tremor-replacements';
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Title } from '@/components/ui/title'
+import { Text } from '@/components/ui/text'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Badge } from '@/components/ui/badge'
 import { Search, User, Phone, Mail, ShoppingCart, ArrowLeft, X, Check, Edit } from 'lucide-react';
 
 // Mock customer data
@@ -162,7 +168,7 @@ export default function CustomerLookupPage() {
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Search className="h-5 w-5 text-gray-400" />
                   </div>
-                  <TextInput
+                  <Input
                     type="text"
                     placeholder="Search by name, email, or phone"
                     value={searchQuery}
@@ -182,13 +188,13 @@ export default function CustomerLookupPage() {
 
             <div className="overflow-y-auto max-h-[calc(100vh-250px)]">
               <Table>
-                <TableHead>
+                <TableHeader>
                   <TableRow>
-                    <TableHeaderCell>Name</TableHeaderCell>
-                    <TableHeaderCell>Last Purchase</TableHeaderCell>
-                    <TableHeaderCell>Points</TableHeaderCell>
+                    <TableHeader>Name</TableHeader>
+                    <TableHeader>Last Purchase</TableHeader>
+                    <TableHeader>Points</TableHeader>
                   </TableRow>
-                </TableHead>
+                </TableHeader>
                 <TableBody>
                   {customers.map((customer) => (
                     <TableRow 
@@ -232,7 +238,7 @@ export default function CustomerLookupPage() {
                 <div>
                   {editMode ? (
                     <div className="flex items-center">
-                      <TextInput
+                      <Input
                         value={editedCustomer.name}
                         onChange={(e) => handleInputChange('name', e.target.value)}
                         className="text-2xl font-bold w-full"
@@ -288,7 +294,7 @@ export default function CustomerLookupPage() {
                     <div>
                       <p className="text-sm text-gray-500">Email</p>
                       {editMode ? (
-                        <TextInput
+                        <Input
                           value={editedCustomer.email}
                           onChange={(e) => handleInputChange('email', e.target.value)}
                           className="mt-1 w-full"
@@ -300,7 +306,7 @@ export default function CustomerLookupPage() {
                     <div>
                       <p className="text-sm text-gray-500">Phone</p>
                       {editMode ? (
-                        <TextInput
+                        <Input
                           value={editedCustomer.phone}
                           onChange={(e) => handleInputChange('phone', e.target.value)}
                           className="mt-1 w-full"

@@ -1,11 +1,15 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { 
-  Card, Title, Text, Table, TableHead, TableRow, TableHeaderCell, 
-  TableBody, TableCell, Badge, TextInput, Select, SelectItem,
-  Button, Dialog, DialogPanel
-} from '@/components/ui/tremor-replacements';
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Title } from '@/components/ui/title'
+import { Text } from '@/components/ui/text'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Badge } from '@/components/ui/badge'
+import { Input } from '@/components/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Plus, Search, Edit, Trash2, Phone, Mail, Building, MoreHorizontal } from 'lucide-react';
 
 type Supplier = {
@@ -126,12 +130,15 @@ export default function SuppliersPage() {
         <div className="flex flex-col md:flex-row gap-4 mb-6">
           <div className="flex-1">
             <Text>Search</Text>
-            <TextInput 
-              icon={Search}
-              placeholder="Search suppliers..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                placeholder="Search suppliers..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
           </div>
           <div className="w-full md:w-48">
             <Text>Status</Text>
@@ -150,12 +157,12 @@ export default function SuppliersPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableHeaderCell>Supplier</TableHeaderCell>
-                <TableHeaderCell>Contact</TableHeaderCell>
-                <TableHeaderCell>Products</TableHeaderCell>
-                <TableHeaderCell>Last Order</TableHeaderCell>
-                <TableHeaderCell>Status</TableHeaderCell>
-                <TableHeaderCell>Actions</TableHeaderCell>
+                <TableHeader>Supplier</TableHeader>
+                <TableHeader>Contact</TableHeader>
+                <TableHeader>Products</TableHeader>
+                <TableHeader>Last Order</TableHeader>
+                <TableHeader>Status</TableHeader>
+                <TableHeader>Actions</TableHeader>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -221,7 +228,7 @@ export default function SuppliersPage() {
 
       {/* Add/Edit Supplier Dialog */}
       <Dialog open={isAddDialogOpen} onClose={setIsAddDialogOpen}>
-        <DialogPanel>
+        <DialogContent>
           <div className="mb-6">
             <Title>{selectedSupplier ? 'Edit Supplier' : 'Add New Supplier'}</Title>
             <Text className="mt-1">
@@ -234,7 +241,7 @@ export default function SuppliersPage() {
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-1">Company Name</label>
-              <TextInput 
+              <Input 
                 placeholder="WoodCraft Inc." 
                 defaultValue={selectedSupplier?.name || ''}
               />
@@ -243,7 +250,7 @@ export default function SuppliersPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-1">Contact Person</label>
-                <TextInput 
+                <Input 
                   placeholder="John Smith" 
                   defaultValue={selectedSupplier?.contactPerson || ''}
                 />
@@ -251,7 +258,7 @@ export default function SuppliersPage() {
               
               <div>
                 <label className="block text-sm font-medium mb-1">Email</label>
-                <TextInput 
+                <Input 
                   type="email" 
                   placeholder="contact@example.com" 
                   defaultValue={selectedSupplier?.email || ''}
@@ -262,7 +269,7 @@ export default function SuppliersPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-1">Phone</label>
-                <TextInput 
+                <Input 
                   placeholder="(555) 123-4567" 
                   defaultValue={selectedSupplier?.phone || ''}
                 />
@@ -279,7 +286,7 @@ export default function SuppliersPage() {
             
             <div>
               <label className="block text-sm font-medium mb-1">Address</label>
-              <TextInput 
+              <Input 
                 placeholder="123 Business St, City, State ZIP" 
                 defaultValue={selectedSupplier?.address || ''}
               />
@@ -300,12 +307,12 @@ export default function SuppliersPage() {
               </Button>
             </div>
           </div>
-        </DialogPanel>
+        </DialogContent>
       </Dialog>
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={isDeleteDialogOpen} onClose={setIsDeleteDialogOpen}>
-        <DialogPanel>
+        <DialogContent>
           <div className="mb-6">
             <Title>Delete Supplier</Title>
             <Text className="mt-1">
@@ -330,7 +337,7 @@ export default function SuppliersPage() {
               Delete
             </Button>
           </div>
-        </DialogPanel>
+        </DialogContent>
       </Dialog>
     </div>
   );

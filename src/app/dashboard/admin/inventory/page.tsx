@@ -3,11 +3,15 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
-import { 
-  Card, Title, Text, Button, Table, TableHead, TableRow, 
-  TableHeaderCell, TableBody, TableCell, Badge, TextInput, 
-  Select, SelectItem, Toggle, ToggleItem, Dialog, DialogPanel
-} from '@/components/ui/tremor-replacements';
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Title } from '@/components/ui/title'
+import { Text } from '@/components/ui/text'
+import { Button } from '@/components/ui/button'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Badge } from '@/components/ui/badge'
+import { Input } from '@/components/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Plus, Search, Edit, Trash2, Box, Package, PackagePlus } from 'lucide-react';
 
 type InventoryItem = {
@@ -227,7 +231,7 @@ export default function InventoryPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-1">
               <Text>Search</Text>
-              <TextInput 
+              <Input 
                 icon={Search}
                 placeholder="Search by name, SKU, or category..."
                 value={searchTerm}
@@ -284,14 +288,14 @@ export default function InventoryPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableHeaderCell>Product</TableHeaderCell>
-                <TableHeaderCell>SKU</TableHeaderCell>
-                <TableHeaderCell>Category</TableHeaderCell>
-                <TableHeaderCell className="text-right">Price</TableHeaderCell>
-                <TableHeaderCell className="text-right">Cost</TableHeaderCell>
-                <TableHeaderCell className="text-right">Quantity</TableHeaderCell>
-                <TableHeaderCell>Status</TableHeaderCell>
-                <TableHeaderCell>Actions</TableHeaderCell>
+                <TableHeader>Product</TableHeader>
+                <TableHeader>SKU</TableHeader>
+                <TableHeader>Category</TableHeader>
+                <TableHeader className="text-right">Price</TableHeader>
+                <TableHeader className="text-right">Cost</TableHeader>
+                <TableHeader className="text-right">Quantity</TableHeader>
+                <TableHeader>Status</TableHeader>
+                <TableHeader>Actions</TableHeader>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -349,7 +353,7 @@ export default function InventoryPage() {
           setIsEditing(false);
         }
       }}>
-        <DialogPanel>
+        <DialogContent>
           <div className="mb-6">
             <Title>{isEditing ? 'Edit Inventory Item' : 'Add New Inventory Item'}</Title>
             <Text>{isEditing ? 'Update product information' : 'Add a new product to your inventory'}</Text>
@@ -358,7 +362,7 @@ export default function InventoryPage() {
           <div className="space-y-4">
             <div>
               <Text>Product Name</Text>
-              <TextInput
+              <Input
                 placeholder="Enter product name"
                 value={form.name}
                 onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
@@ -368,7 +372,7 @@ export default function InventoryPage() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Text>SKU</Text>
-                <TextInput
+                <Input
                   placeholder="Enter SKU"
                   value={form.sku}
                   onChange={(e) => setForm((f) => ({ ...f, sku: e.target.value }))}
@@ -392,7 +396,7 @@ export default function InventoryPage() {
             <div className="grid grid-cols-3 gap-4">
               <div>
                 <Text>Price</Text>
-                <TextInput
+                <Input
                   placeholder="0.00"
                   value={form.price}
                   onChange={(e) => setForm((f) => ({ ...f, price: e.target.value }))}
@@ -400,7 +404,7 @@ export default function InventoryPage() {
               </div>
               <div>
                 <Text>Cost</Text>
-                <TextInput
+                <Input
                   placeholder="0.00"
                   value={form.cost}
                   onChange={(e) => setForm((f) => ({ ...f, cost: e.target.value }))}
@@ -408,7 +412,7 @@ export default function InventoryPage() {
               </div>
               <div>
                 <Text>Quantity</Text>
-                <TextInput
+                <Input
                   placeholder="0"
                   value={form.quantity}
                   onChange={(e) => setForm((f) => ({ ...f, quantity: e.target.value }))}
@@ -417,7 +421,7 @@ export default function InventoryPage() {
             </div>
             <div>
               <Text>Low Stock Threshold</Text>
-              <TextInput
+              <Input
                 placeholder="3"
                 value={form.lowStockThreshold}
                 onChange={(e) => setForm((f) => ({ ...f, lowStockThreshold: e.target.value }))}
@@ -444,7 +448,7 @@ export default function InventoryPage() {
               </Button>
             </div>
           </div>
-        </DialogPanel>
+        </DialogContent>
       </Dialog>
     </div>
   );

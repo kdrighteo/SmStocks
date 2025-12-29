@@ -1,11 +1,14 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { 
-  Card, Title, Text, Table, TableHead, TableRow, TableHeaderCell, 
-  TableBody, TableCell, TextInput, Select, SelectItem,
-  Button, Dialog, DialogPanel
-} from '@/components/ui/tremor-replacements';
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Title } from '@/components/ui/title'
+import { Text } from '@/components/ui/text'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Input } from '@/components/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import Image from 'next/image';
 import { Search, User, UserPlus, Shield, CheckCircle, XCircle, Pencil, Trash2 } from 'lucide-react';
 
@@ -164,12 +167,15 @@ export default function UsersPage() {
         <div className="flex flex-col md:flex-row gap-4 mb-6">
           <div className="flex-1">
             <Text>Search</Text>
-            <TextInput 
-              icon={Search}
-              placeholder="Search users..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                placeholder="Search users..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
           </div>
           <div className="w-full md:w-48">
             <Text>Role</Text>
@@ -200,16 +206,16 @@ export default function UsersPage() {
 
         <div className="overflow-x-auto">
           <Table>
-            <TableHead>
+            <TableHeader>
               <TableRow>
-                <TableHeaderCell>User</TableHeaderCell>
-                <TableHeaderCell>Role</TableHeaderCell>
-                <TableHeaderCell>Status</TableHeaderCell>
-                <TableHeaderCell>Last Active</TableHeaderCell>
-                <TableHeaderCell>Joined</TableHeaderCell>
-                <TableHeaderCell>Actions</TableHeaderCell>
+                <TableHeader>User</TableHeader>
+                <TableHeader>Role</TableHeader>
+                <TableHeader>Status</TableHeader>
+                <TableHeader>Last Active</TableHeader>
+                <TableHeader>Joined</TableHeader>
+                <TableHeader>Actions</TableHeader>
               </TableRow>
-            </TableHead>
+            </TableHeader>
             <TableBody>
               {filteredUsers.map((user) => (
                 <TableRow key={user.id}>

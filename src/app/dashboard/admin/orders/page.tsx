@@ -3,11 +3,15 @@
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useState, useMemo, useEffect } from 'react';
-import { 
-  Card, Title, Text, Button, Table, TableHead, TableRow, 
-  TableHeaderCell, TableBody, TableCell, TextInput, 
-  Select, SelectItem, Dialog, DialogPanel, Badge
-} from '@/components/ui/tremor-replacements';
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Title } from '@/components/ui/title'
+import { Text } from '@/components/ui/text'
+import { Button } from '@/components/ui/button'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Input } from '@/components/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Badge } from '@/components/ui/badge'
 import { Search, Eye, Truck, CheckCircle, XCircle, Clock, Package, Plus, X, Calendar, User, DollarSign } from 'lucide-react';
 
 type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
@@ -262,7 +266,7 @@ export default function OrdersPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div className="flex-1">
             <Text>Search</Text>
-            <TextInput 
+            <Input 
               icon={Search}
               placeholder="Search by order ID, customer name, or email..."
               value={searchTerm}
@@ -301,13 +305,13 @@ export default function OrdersPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableHeaderCell>Order ID</TableHeaderCell>
-                <TableHeaderCell>Customer</TableHeaderCell>
-                <TableHeaderCell>Date</TableHeaderCell>
-                <TableHeaderCell>Items</TableHeaderCell>
-                <TableHeaderCell className="text-right">Total</TableHeaderCell>
-                <TableHeaderCell>Status</TableHeaderCell>
-                <TableHeaderCell>Actions</TableHeaderCell>
+                <TableHeader>Order ID</TableHeader>
+                <TableHeader>Customer</TableHeader>
+                <TableHeader>Date</TableHeader>
+                <TableHeader>Items</TableHeader>
+                <TableHeader className="text-right">Total</TableHeader>
+                <TableHeader>Status</TableHeader>
+                <TableHeader>Actions</TableHeader>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -344,7 +348,7 @@ export default function OrdersPage() {
       {/* Order Detail Modal */}
       {selectedOrder && (
         <Dialog open={isDetailModalOpen} onClose={() => setIsDetailModalOpen(false)}>
-          <DialogPanel className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-start mb-6">
               <div>
                 <Title>Order Details</Title>
@@ -413,10 +417,10 @@ export default function OrdersPage() {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableHeaderCell>Product</TableHeaderCell>
-                      <TableHeaderCell className="text-right">Quantity</TableHeaderCell>
-                      <TableHeaderCell className="text-right">Price</TableHeaderCell>
-                      <TableHeaderCell className="text-right">Subtotal</TableHeaderCell>
+                      <TableHeader>Product</TableHeader>
+                      <TableHeader className="text-right">Quantity</TableHeader>
+                      <TableHeader className="text-right">Price</TableHeader>
+                      <TableHeader className="text-right">Subtotal</TableHeader>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -454,7 +458,7 @@ export default function OrdersPage() {
                 </Button>
               ))}
             </div>
-          </DialogPanel>
+          </DialogContent>
         </Dialog>
       )}
 
@@ -462,7 +466,7 @@ export default function OrdersPage() {
       <Dialog open={isCreateModalOpen} onClose={() => {
         if (!isLoading) setIsCreateModalOpen(false);
       }}>
-        <DialogPanel className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <div className="flex justify-between items-start mb-6">
             <Title>Create New Order</Title>
             <Button
@@ -477,7 +481,7 @@ export default function OrdersPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Text>Customer Name *</Text>
-                <TextInput
+                <Input
                   placeholder="Enter customer name"
                   value={newOrderForm.customer}
                   onChange={(e) => setNewOrderForm((f) => ({ ...f, customer: e.target.value }))}
@@ -485,7 +489,7 @@ export default function OrdersPage() {
               </div>
               <div>
                 <Text>Email</Text>
-                <TextInput
+                <Input
                   type="email"
                   placeholder="customer@example.com"
                   value={newOrderForm.customerEmail}
@@ -497,7 +501,7 @@ export default function OrdersPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Text>Phone</Text>
-                <TextInput
+                <Input
                   placeholder="+1234567890"
                   value={newOrderForm.customerPhone}
                   onChange={(e) => setNewOrderForm((f) => ({ ...f, customerPhone: e.target.value }))}
@@ -505,7 +509,7 @@ export default function OrdersPage() {
               </div>
               <div>
                 <Text>Shipping Address</Text>
-                <TextInput
+                <Input
                   placeholder="123 Main St, City, State"
                   value={newOrderForm.shippingAddress}
                   onChange={(e) => setNewOrderForm((f) => ({ ...f, shippingAddress: e.target.value }))}
@@ -607,7 +611,7 @@ export default function OrdersPage() {
               </Button>
             </div>
           </div>
-        </DialogPanel>
+        </DialogContent>
       </Dialog>
     </div>
   );

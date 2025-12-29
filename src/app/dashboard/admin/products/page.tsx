@@ -1,11 +1,15 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import { 
-  Card, Title, Text, Button, Table, TableHead, TableRow, 
-  TableHeaderCell, TableBody, TableCell, TextInput, Badge,
-  Select, SelectItem, Dialog, DialogPanel
-} from '@/components/ui/tremor-replacements';
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Title } from '@/components/ui/title'
+import { Text } from '@/components/ui/text'
+import { Button } from '@/components/ui/button'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Input } from '@/components/ui/input'
+import { Badge } from '@/components/ui/badge'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Plus, Search, Edit, Trash2, Package, DollarSign, Tag, Check, X } from 'lucide-react';
 
 type ProductStatus = 'in_stock' | 'low_stock' | 'out_of_stock';
@@ -236,12 +240,15 @@ export default function ProductsPage() {
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <Text>Search</Text>
-              <TextInput 
-                icon={Search}
-                placeholder="Search by name, SKU, or description..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input
+                  placeholder="Search by name, SKU, or description..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
             </div>
             <div className="w-full md:w-48">
               <Text>Category</Text>
@@ -293,17 +300,17 @@ export default function ProductsPage() {
 
         <div className="overflow-x-auto">
           <Table>
-            <TableHead>
+            <TableHeader>
               <TableRow>
-                <TableHeaderCell>Product</TableHeaderCell>
-                <TableHeaderCell>SKU</TableHeaderCell>
-                <TableHeaderCell>Category</TableHeaderCell>
-                <TableHeaderCell className="text-right">Price</TableHeaderCell>
-                <TableHeaderCell className="text-right">Stock</TableHeaderCell>
-                <TableHeaderCell>Status</TableHeaderCell>
-                <TableHeaderCell>Actions</TableHeaderCell>
+                <TableHeader>Product</TableHeader>
+                <TableHeader>SKU</TableHeader>
+                <TableHeader>Category</TableHeader>
+                <TableHeader className="text-right">Price</TableHeader>
+                <TableHeader className="text-right">Stock</TableHeader>
+                <TableHeader>Status</TableHeader>
+                <TableHeader>Actions</TableHeader>
               </TableRow>
-            </TableHead>
+            </TableHeader>
             <TableBody>
               {filteredProducts.map((product) => (
                 <TableRow key={product.id}>
@@ -374,7 +381,7 @@ export default function ProductsPage() {
           setIsEditing(false);
         }
       }}>
-        <DialogPanel>
+        <DialogContent>
           <h3 className="text-lg font-medium mb-2">
             {isEditing ? 'Edit Product' : 'Add New Product'}
           </h3>
@@ -382,7 +389,7 @@ export default function ProductsPage() {
           <div className="mt-4 space-y-4">
             <div>
               <label className="block text-sm font-medium mb-1">Product Name</label>
-              <TextInput
+              <Input
                 placeholder="e.g., Modern Leather Sofa"
                 value={form.name}
                 onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
@@ -392,7 +399,7 @@ export default function ProductsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-1">SKU</label>
-                <TextInput
+                <Input
                   placeholder="e.g., FUR-SOF-001"
                   value={form.sku}
                   onChange={(e) => setForm((f) => ({ ...f, sku: e.target.value }))}
@@ -422,7 +429,7 @@ export default function ProductsPage() {
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <DollarSign className="h-5 w-5 text-gray-400" />
                   </div>
-                  <TextInput
+                  <Input
                     className="pl-10"
                     placeholder="0.00"
                     value={form.price}
@@ -433,7 +440,7 @@ export default function ProductsPage() {
               
               <div>
                 <label className="block text-sm font-medium mb-1">Stock</label>
-                <TextInput
+                <Input
                   type="number"
                   placeholder="0"
                   value={form.stock}
@@ -462,7 +469,7 @@ export default function ProductsPage() {
               </Button>
             </div>
           </div>
-        </DialogPanel>
+        </DialogContent>
       </Dialog>
     </div>
   );

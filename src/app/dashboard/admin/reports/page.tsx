@@ -1,10 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { 
-  Card, Title, Text, Button, Tab, TabGroup, TabList, TabPanel, TabPanels, 
-  Metric, BarChart, LineChart, AreaChart, DonutChart, Select, SelectItem
-} from '@/components/ui/tremor-replacements';
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Title } from '@/components/ui/title'
+import { Text } from '@/components/ui/text'
+import { Button } from '@/components/ui/button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Metric } from '@/components/ui/metric'
+import { LineChart } from '@/components/ui/line-chart'
+import { BarChart } from '@/components/ui/bar-chart'
+import { AreaChart } from '@/components/ui/area-chart'
+import { DonutChart } from '@/components/ui/donut-chart'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Download, BarChart2, LineChart as LineChartIcon, PieChart, Filter } from 'lucide-react';
 
 // Mock data
@@ -116,15 +123,14 @@ export default function ReportsPage() {
         ))}
       </div>
 
-      <TabGroup className="mb-6">
-        <TabList className="mb-6">
-          <Tab>Sales</Tab>
-          <Tab>Products</Tab>
-          <Tab>Customers</Tab>
-          <Tab>Inventory</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
+      <Tabs className="mb-6">
+        <TabsList className="mb-6">
+          <TabsTrigger value="sales">Sales</TabsTrigger>
+          <TabsTrigger value="products">Products</TabsTrigger>
+          <TabsTrigger value="customers">Customers</TabsTrigger>
+          <TabsTrigger value="inventory">Inventory</TabsTrigger>
+        </TabsList>
+        <TabsContent value="sales">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2">
                 <Card>
@@ -175,8 +181,8 @@ export default function ReportsPage() {
                 </Card>
               </div>
             </div>
-          </TabPanel>
-          <TabPanel>
+        </TabsContent>
+        <TabsContent value="sales">
             <Card>
               <div className="flex justify-between items-center mb-6">
                 <div>
@@ -219,8 +225,8 @@ export default function ReportsPage() {
                 </table>
               </div>
             </Card>
-          </TabPanel>
-          <TabPanel>
+        </TabsContent>
+        <TabsContent value="sales">
             <Card>
               <Title>Customer Analytics</Title>
               <Text>Customer acquisition and engagement metrics</Text>
@@ -233,8 +239,8 @@ export default function ReportsPage() {
                 valueFormatter={(value) => value.toLocaleString()}
               />
             </Card>
-          </TabPanel>
-          <TabPanel>
+        </TabsContent>
+        <TabsContent value="sales">
             <Card>
               <Title>Inventory Levels</Title>
               <Text>Current stock status by category</Text>
@@ -248,9 +254,8 @@ export default function ReportsPage() {
                 yAxisWidth={60}
               />
             </Card>
-          </TabPanel>
-        </TabPanels>
-      </TabGroup>
+        </TabsContent>
+        </Tabs>
     </div>
   );
 }
