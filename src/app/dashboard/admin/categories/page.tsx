@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { 
   Card, Title, Text, Button, Table, TableHead, TableRow, 
   TableHeaderCell, TableBody, TableCell, TextInput, Badge,
@@ -75,6 +75,29 @@ export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>(mockCategories);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [form, setForm] = useState({
+    name: '',
+    slug: '',
+    description: '',
+    status: true,
+    featured: false,
+  });
+
+  useEffect(() => {
+    if (isAddModalOpen) {
+      if (selectedCategory) {
+        setForm({
+          name: selectedCategory.name,
+          slug: selectedCategory.slug,
+          description: selectedCategory.description,
+          status: selectedCategory.status === 'active',
+          featured: selectedCategory.featured,
+        });
+      } else {
+        setForm({ name: '', slug: '', description: '', status: true, featured: false });
+      }
+    }
+  }, [isAddModalOpen, selectedCategory]);
 
   // Filter categories
   const filteredCategories = useMemo(() => {
@@ -274,7 +297,8 @@ export default function CategoriesPage() {
               <label className="block text-sm font-medium mb-1">Name</label>
               <TextInput 
                 placeholder="e.g., Living Room Furniture"
-                defaultValue={selectedCategory?.name || ''}
+                value={form.name}
+                onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
               />
             </div>
             
@@ -282,7 +306,8 @@ export default function CategoriesPage() {
               <label className="block text-sm font-medium mb-1">Slug</label>
               <TextInput 
                 placeholder="e.g., living-room"
-                defaultValue={selectedCategory?.slug || ''}
+                value={form.slug}
+                onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
               />
             </div>
             
@@ -292,7 +317,8 @@ export default function CategoriesPage() {
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 rows={3}
                 placeholder="Enter a description..."
-                defaultValue={selectedCategory?.description || ''}
+                value={form.description}
+                onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
               />
             </div>
             
@@ -302,7 +328,8 @@ export default function CategoriesPage() {
                   <input
                     type="checkbox"
                     id="status-toggle"
-                    defaultChecked={selectedCategory?.status === 'active'}
+                    checked={form.status}
+                    onChange={(e) => setForm((f) => ({ ...f, status: e.target.checked }))}
                     className="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
                   />
                   <span className="text-sm text-gray-700">Active</span>
@@ -313,7 +340,8 @@ export default function CategoriesPage() {
                     type="checkbox" 
                     id="featured-toggle"
                     className="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
-                    defaultChecked={selectedCategory?.featured || false}
+                    checked={form.featured}
+                    onChange={(e) => setForm((f) => ({ ...f, featured: e.target.checked }))}
                   />
                   <span className="text-sm text-gray-600">Featured</span>
                 </label>
@@ -326,7 +354,41 @@ export default function CategoriesPage() {
                 >
                   Cancel
                 </Button>
-                <Button>
+                <Button
+                  onClick={() => {
+                    if (!form.name || !form.slug) return;
+                    if (isEditing && selectedCategory) {
+                      setCategories((prev) =>
+                        prev.map((cat) =>
+                          cat.id === selectedCategory.id
+                            ? {
+                                ...cat,
+                                name: form.name,
+                                slug: form.slug,
+                                description: form.description,
+                                status: form.status ? 'active' : 'archived',
+                                featured: form.featured,
+                              }
+                            : cat,
+                        ),
+                      );
+                    } else {
+                      const newCategory: Category = {
+                        id: crypto.randomUUID(),
+                        name: form.name,
+                        slug: form.slug,
+                        description: form.description,
+                        status: form.status ? 'active' : 'archived',
+                        featured: form.featured,
+                        productCount: 0,
+                      };
+                      setCategories((prev) => [newCategory, ...prev]);
+                    }
+                    setIsAddModalOpen(false);
+                    setSelectedCategory(null);
+                    setIsEditing(false);
+                  }}
+                >
                   {isEditing ? 'Update Category' : 'Add Category'}
                 </Button>
               </div>

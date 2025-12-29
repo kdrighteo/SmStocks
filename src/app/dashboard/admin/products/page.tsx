@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { 
   Card, Title, Text, Button, Table, TableHead, TableRow, 
   TableHeaderCell, TableBody, TableCell, TextInput, Badge,
@@ -76,7 +76,20 @@ export default function ProductsPage() {
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [products] = useState<Product[]>(mockProducts);
+  const [products, setProducts] = useState<Product[]>(mockProducts);
+  const [form, setForm] = useState({
+    name: '',
+    sku: '',
+    category: 'sofas' as ProductCategory,
+    price: '',
+    stock: '',
+  });
+
+  useEffect(() => {
+    if (!isAddModalOpen) {
+      setForm({ name: '', sku: '', category: 'sofas', price: '', stock: '' });
+    }
+  }, [isAddModalOpen]);
 
   // Filter products
   const filteredProducts = useMemo(() => {
@@ -121,8 +134,8 @@ export default function ProductsPage() {
           <h1 className="text-2xl font-bold">Products</h1>
           <p className="text-gray-600">Manage your product inventory</p>
         </div>
-        <Button 
-          icon={Plus} 
+        <Button
+          icon={Plus}
           className="mt-4 md:mt-0 w-full md:w-auto"
           onClick={() => setIsAddModalOpen(true)}
         >
@@ -251,18 +264,29 @@ export default function ProductsPage() {
           <div className="mt-4 space-y-4">
             <div>
               <label className="block text-sm font-medium mb-1">Product Name</label>
-              <TextInput placeholder="e.g., Modern Leather Sofa" />
+              <TextInput
+                placeholder="e.g., Modern Leather Sofa"
+                value={form.name}
+                onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+              />
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-1">SKU</label>
-                <TextInput placeholder="e.g., FUR-SOF-001" />
+                <TextInput
+                  placeholder="e.g., FUR-SOF-001"
+                  value={form.sku}
+                  onChange={(e) => setForm((f) => ({ ...f, sku: e.target.value }))}
+                />
               </div>
               
               <div>
                 <label className="block text-sm font-medium mb-1">Category</label>
-                <Select>
+                <Select
+                  value={form.category}
+                  onValueChange={(value) => setForm((f) => ({ ...f, category: value as ProductCategory }))}
+                >
                   <SelectItem value="sofas">Sofas</SelectItem>
                   <SelectItem value="dining">Dining</SelectItem>
                   <SelectItem value="beds">Beds</SelectItem>
@@ -280,13 +304,23 @@ export default function ProductsPage() {
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <DollarSign className="h-5 w-5 text-gray-400" />
                   </div>
-                  <TextInput className="pl-10" placeholder="0.00" />
+                  <TextInput
+                    className="pl-10"
+                    placeholder="0.00"
+                    value={form.price}
+                    onChange={(e) => setForm((f) => ({ ...f, price: e.target.value }))}
+                  />
                 </div>
               </div>
               
               <div>
                 <label className="block text-sm font-medium mb-1">Stock</label>
-                <TextInput type="number" placeholder="0" />
+                <TextInput
+                  type="number"
+                  placeholder="0"
+                  value={form.stock}
+                  onChange={(e) => setForm((f) => ({ ...f, stock: e.target.value }))}
+                />
               </div>
             </div>
             
@@ -297,7 +331,28 @@ export default function ProductsPage() {
               >
                 Cancel
               </Button>
-              <Button>
+              <Button
+                onClick={() => {
+                  const price = parseFloat(form.price || '0');
+                  const stock = parseInt(form.stock || '0', 10);
+                  if (!form.name || !form.sku || isNaN(price) || isNaN(stock)) {
+                    return;
+                  }
+                  const status: ProductStatus =
+                    stock === 0 ? 'out_of_stock' : stock <= 5 ? 'low_stock' : 'in_stock';
+                  const newProduct: Product = {
+                    id: `PROD-${products.length + 1}`.padStart(8, '0'),
+                    name: form.name,
+                    sku: form.sku,
+                    category: form.category,
+                    price,
+                    stock,
+                    status,
+                  };
+                  setProducts((prev) => [newProduct, ...prev]);
+                  setIsAddModalOpen(false);
+                }}
+              >
                 Add Product
               </Button>
             </div>

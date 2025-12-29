@@ -40,16 +40,26 @@ export default function InventoryPage() {
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [items, setItems] = useState<InventoryItem[]>(mockInventory);
+  const [form, setForm] = useState({
+    name: '',
+    category: '',
+    sku: '',
+    price: '',
+    cost: '',
+    quantity: '',
+    lowStockThreshold: '3',
+  });
   
   // Get unique categories for filter
   const categories = useMemo(() => {
-    const cats = new Set(mockInventory.map(item => item.category));
+    const cats = new Set(items.map(item => item.category));
     return ['All Categories', ...Array.from(cats)];
-  }, []);
+  }, [items]);
 
   // Filter inventory
   const filteredInventory = useMemo(() => {
-    return mockInventory.filter(item => {
+    return items.filter(item => {
       const matchesSearch = 
         item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.sku.toLowerCase().includes(searchTerm.toLowerCase());
@@ -59,7 +69,7 @@ export default function InventoryPage() {
       
       return matchesSearch && matchesCategory && matchesStatus;
     });
-  }, [searchTerm, categoryFilter, statusFilter]);
+  }, [items, searchTerm, categoryFilter, statusFilter]);
 
   // Format currency
   const formatCurrency = (amount: number) => {
@@ -194,17 +204,28 @@ export default function InventoryPage() {
           <div className="space-y-4">
             <div>
               <Text>Product Name</Text>
-              <TextInput placeholder="Enter product name" />
+              <TextInput
+                placeholder="Enter product name"
+                value={form.name}
+                onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+              />
             </div>
             
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Text>SKU</Text>
-                <TextInput placeholder="Enter SKU" />
+                <TextInput
+                  placeholder="Enter SKU"
+                  value={form.sku}
+                  onChange={(e) => setForm((f) => ({ ...f, sku: e.target.value }))}
+                />
               </div>
               <div>
                 <Text>Category</Text>
-                <Select>
+                <Select
+                  value={form.category}
+                  onValueChange={(value) => setForm((f) => ({ ...f, category: value }))}
+                >
                   {categories.filter(cat => cat !== 'All Categories').map(category => (
                     <SelectItem key={category} value={category}>
                       {category}
@@ -217,16 +238,36 @@ export default function InventoryPage() {
             <div className="grid grid-cols-3 gap-4">
               <div>
                 <Text>Price</Text>
-                <TextInput placeholder="0.00" />
+                <TextInput
+                  placeholder="0.00"
+                  value={form.price}
+                  onChange={(e) => setForm((f) => ({ ...f, price: e.target.value }))}
+                />
               </div>
               <div>
                 <Text>Cost</Text>
-                <TextInput placeholder="0.00" />
+                <TextInput
+                  placeholder="0.00"
+                  value={form.cost}
+                  onChange={(e) => setForm((f) => ({ ...f, cost: e.target.value }))}
+                />
               </div>
               <div>
                 <Text>Quantity</Text>
-                <TextInput placeholder="0" />
+                <TextInput
+                  placeholder="0"
+                  value={form.quantity}
+                  onChange={(e) => setForm((f) => ({ ...f, quantity: e.target.value }))}
+                />
               </div>
+            </div>
+            <div>
+              <Text>Low Stock Threshold</Text>
+              <TextInput
+                placeholder="3"
+                value={form.lowStockThreshold}
+                onChange={(e) => setForm((f) => ({ ...f, lowStockThreshold: e.target.value }))}
+              />
             </div>
             
             <div className="mt-6 flex justify-end space-x-3">
@@ -236,7 +277,41 @@ export default function InventoryPage() {
               >
                 Cancel
               </Button>
-              <Button>
+              <Button
+                onClick={() => {
+                  const price = parseFloat(form.price || '0');
+                  const cost = parseFloat(form.cost || '0');
+                  const quantity = parseInt(form.quantity || '0', 10);
+                  const threshold = parseInt(form.lowStockThreshold || '0', 10);
+                  if (!form.name || !form.sku || !form.category || isNaN(price) || isNaN(cost) || isNaN(quantity)) {
+                    return;
+                  }
+                  const status: InventoryItem['status'] =
+                    quantity === 0 ? 'out_of_stock' : quantity <= threshold ? 'low_stock' : 'in_stock';
+                  const newItem: InventoryItem = {
+                    id: items.length + 1,
+                    name: form.name,
+                    category: form.category,
+                    sku: form.sku,
+                    price,
+                    cost,
+                    quantity,
+                    lowStockThreshold: threshold || 0,
+                    status,
+                  };
+                  setItems((prev) => [newItem, ...prev]);
+                  setIsAddModalOpen(false);
+                  setForm({
+                    name: '',
+                    category: '',
+                    sku: '',
+                    price: '',
+                    cost: '',
+                    quantity: '',
+                    lowStockThreshold: '3',
+                  });
+                }}
+              >
                 Add Item
               </Button>
             </div>
