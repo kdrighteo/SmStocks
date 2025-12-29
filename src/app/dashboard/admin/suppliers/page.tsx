@@ -162,12 +162,12 @@ export default function SuppliersPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableHeader>Supplier</TableHeader>
-                <TableHeader>Contact</TableHeader>
-                <TableHeader>Products</TableHeader>
-                <TableHeader>Last Order</TableHeader>
-                <TableHeader>Status</TableHeader>
-                <TableHeader>Actions</TableHeader>
+                <TableHead>Supplier</TableHead>
+                <TableHead>Contact</TableHead>
+                <TableHead>Products</TableHead>
+                <TableHead>Last Order</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHead>
             <TableBody>

@@ -113,13 +113,13 @@ export default function CustomersPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableHeader>Customer</TableHeader>
-                <TableHeader>Email</TableHeader>
-                <TableHeader>Phone</TableHeader>
-                <TableHeader className="text-right">Orders</TableHeader>
-                <TableHeader className="text-right">Total Spent</TableHeader>
-                <TableHeader>Status</TableHeader>
-                <TableHeader>Actions</TableHeader>
+                <TableHead>Customer</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Phone</TableHead>
+                <TableHead className="text-right">Orders</TableHead>
+                <TableHead className="text-right">Total Spent</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHead>
             <TableBody>

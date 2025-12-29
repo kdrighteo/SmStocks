@@ -315,13 +315,13 @@ export default function OrdersPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableHeader>Order ID</TableHeader>
-                <TableHeader>Customer</TableHeader>
-                <TableHeader>Date</TableHeader>
-                <TableHeader>Items</TableHeader>
-                <TableHeader className="text-right">Total</TableHeader>
-                <TableHeader>Status</TableHeader>
-                <TableHeader>Actions</TableHeader>
+                <TableHead>Order ID</TableHead>
+                <TableHead>Customer</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead>Items</TableHead>
+                <TableHead className="text-right">Total</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -427,10 +427,10 @@ export default function OrdersPage() {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableHeader>Product</TableHeader>
-                      <TableHeader className="text-right">Quantity</TableHeader>
-                      <TableHeader className="text-right">Price</TableHeader>
-                      <TableHeader className="text-right">Subtotal</TableHeader>
+                      <TableHead>Product</TableHead>
+                      <TableHead className="text-right">Quantity</TableHead>
+                      <TableHead className="text-right">Price</TableHead>
+                      <TableHead className="text-right">Subtotal</TableHead>
                     </TableRow>
                   </TableHead>
                   <TableBody>

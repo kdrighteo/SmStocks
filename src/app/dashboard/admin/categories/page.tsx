@@ -225,12 +225,12 @@ export default function CategoriesPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableHeader>Category</TableHeader>
-                <TableHeader>Description</TableHeader>
-                <TableHeader className="text-right">Products</TableHeader>
-                <TableHeader>Status</TableHeader>
-                <TableHeader>Featured</TableHeader>
-                <TableHeader>Actions</TableHeader>
+                <TableHead>Category</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead className="text-right">Products</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Featured</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHead>
             <TableBody>

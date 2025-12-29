@@ -218,12 +218,12 @@ export default function UsersPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHeader>User</TableHeader>
-                <TableHeader>Role</TableHeader>
-                <TableHeader>Status</TableHeader>
-                <TableHeader>Last Active</TableHeader>
-                <TableHeader>Joined</TableHeader>
-                <TableHeader>Actions</TableHeader>
+                <TableHead>User</TableHead>
+                <TableHead>Role</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Last Active</TableHead>
+                <TableHead>Joined</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

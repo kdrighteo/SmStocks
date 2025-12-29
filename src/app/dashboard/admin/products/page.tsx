@@ -312,13 +312,13 @@ export default function ProductsPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHeader>Product</TableHeader>
-                <TableHeader>SKU</TableHeader>
-                <TableHeader>Category</TableHeader>
-                <TableHeader className="text-right">Price</TableHeader>
-                <TableHeader className="text-right">Stock</TableHeader>
-                <TableHeader>Status</TableHeader>
-                <TableHeader>Actions</TableHeader>
+                <TableHead>Product</TableHead>
+                <TableHead>SKU</TableHead>
+                <TableHead>Category</TableHead>
+                <TableHead className="text-right">Price</TableHead>
+                <TableHead className="text-right">Stock</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

@@ -176,12 +176,11 @@ export default function CustomerLookupPage() {
                     className="pl-10 w-full"
                   />
                 </div>
-                <Button 
-                  type="submit" 
-                  loading={isLoading}
-                  loadingText="Searching..."
+                <Button
+                  type="submit"
+                  disabled={isLoading}
                 >
-                  Search
+                  {isLoading ? "Searching..." : "Search"}
                 </Button>
               </div>
             </form>
@@ -190,9 +189,9 @@ export default function CustomerLookupPage() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHeader>Name</TableHeader>
-                    <TableHeader>Last Purchase</TableHeader>
-                    <TableHeader>Points</TableHeader>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Last Purchase</TableHead>
+                    <TableHead>Points</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>

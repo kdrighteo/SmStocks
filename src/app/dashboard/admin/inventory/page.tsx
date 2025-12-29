@@ -298,14 +298,14 @@ export default function InventoryPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableHeader>Product</TableHeader>
-                <TableHeader>SKU</TableHeader>
-                <TableHeader>Category</TableHeader>
-                <TableHeader className="text-right">Price</TableHeader>
-                <TableHeader className="text-right">Cost</TableHeader>
-                <TableHeader className="text-right">Quantity</TableHeader>
-                <TableHeader>Status</TableHeader>
-                <TableHeader>Actions</TableHeader>
+                <TableHead>Product</TableHead>
+                <TableHead>SKU</TableHead>
+                <TableHead>Category</TableHead>
+                <TableHead className="text-right">Price</TableHead>
+                <TableHead className="text-right">Cost</TableHead>
+                <TableHead className="text-right">Quantity</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHead>
             <TableBody>
